@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "commonJS",
+    "target": "es6",                                                   
+    "lib": ["ES6", "DOM"],
+    "strict": true,                                
+    "noImplicitAny": true,                          
+    "esModuleInterop": true,                        
+    "skipLibCheck": true,                           
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "public/js_files",
+    "rootDir": "ts_files_uncompiled"
+  },
+}
