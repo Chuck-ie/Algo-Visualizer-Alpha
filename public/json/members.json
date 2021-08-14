@@ -1,0 +1,21 @@
+{
+    "members": [
+    {
+        "id": 1,
+        "name": "Tom",
+        "alter": 21,
+        "status": "active"
+    },
+    {
+        "id": 2,
+        "name": "Leo",
+        "alter": 24,
+        "status": "inactive"
+    },
+    {
+        "id": 3,
+        "name": "thea",
+        "alter": 19,
+        "status": "inactive"
+    }
+]}

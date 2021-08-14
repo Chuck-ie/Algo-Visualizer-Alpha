@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="keywords" content="Visualizer, Coding, Algorithms">
+        <meta name="description" content="Visualizer of various algorithms. Includes sorting- and pathfinding algorithms">
+        <meta name="author" content="Tom Carnein">
+        <meta name="viewport" content="width=device-width, inition-scale=1, height=device-height">
+        
+        <title>Visualizer</title>
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+    </head>
+    <body>  
+        <!--
+        <h1>Visualization of various algorithms</h1><hr>
+        <div class="dropdown-menu">
+            <form method="POST">
+                Algorithm:<input type="text" name="vorname"><br>
+                Passwort:<input type="password" name="password"><br>
+                <input type="range" name="sorting-speed" min="1" max="10"><br>
+
+                <input type="submit" value="Load Algorithm"><br>
+            </form>
+        </div>
+        -->
+        <div id="sidebar">
+            <header>
+                <p>Tom Carnein</p>
+            </header>
+            <p class="menu_option">Homepage</p><br>
+            <p class="menu_option">My Projects</p><br>
+            <p class="menu_option">Explore</p><br>
+            <p class="menu_option">About</p><br>
+            <p class="menu_option">Contact</p><br>
+        </div>
+        
+        <div id="playfield">
+            
+            <div id="playfield_menu">
+                <h1>Algorithm Menu</h1>
+                <hr>
+                <div class="dropdown_menu">
+                    <button id="algo_type" class="drowdown_button">Choose Type</button>
+                    <div class="algorithm_menu_options">
+                        <a id="Sorting" class="algo_type" onclick="chooseAlgoType(this.id)">Sorting</a>
+                        <a id="Pathfinding" class="algo_type" onclick="chooseAlgoType(this.id)">Pathfinding</a>
+                    </div>
+                </div>
+                <hr>
+                <div id="menu1" class="dropdown_menu">
+                    <button id="menu1_btn1" class="drowdown_button choose_algo">Choose Algorithm</button>
+                    <button id="menu1_btn2" class="drowdown_button choose_algo">Choose Type first</button>
+                </div>
+
+                <div id="menu2" class="dropdown_menu">
+                    <button class="drowdown_button choose_algo">Choose Algorithm</button>
+                    <div class="algorithm_menu_options">
+                        <a id="SelectionSort" class="algo" onclick="selectAlgo(this.id)">SelectionSort</a>
+                        <a id="QuickSort" class="algo" onclick="selectAlgo(this.id)">QuickSort</a>
+                    </div>
+                </div>
+
+                <div id="menu3" class="dropdown_menu">
+                    <button class="drowdown_button choose_algo">Choose Algorithm</button>
+                    <div class="algorithm_menu_options">
+                        <a id="Dijkstra" class="algo" onclick="selectAlgo(this.id)">Dijkstra</a>
+                    </div>
+                </div>
+                <hr>
+                <div class="dropdown_menu">
+                    <button id="algo_speed" class="drowdown_button">Choose Speed</button>
+                    <div class="algorithm_menu_options">
+                        <a id="0.25" class="algo_speed" onclick="selectAlgoSpeed(this.id)">0.25x</a>
+                        <a id="0.5" class="algo_speed" onclick="selectAlgoSpeed(this.id)">0.5x</a>
+                        <a id="0.75" class="algo_speed" onclick="selectAlgoSpeed(this.id)">0.75x</a>
+                        <a id="1.0" class="algo_speed" onclick="selectAlgoSpeed(this.id)">1.0x</a>
+                    </div>
+                </div>
+                <hr>
+                <div class="start_reset">
+                    <button id="reset_algo" onclick="resetAlgo()">Reset</button>
+                </div>
+                <hr>
+
+
+
+
+                <div class="start_reset">
+                    <button id="start_algo" onclick="testStart()">Start</button>
+                </div>
+                
+
+            </div>
+            
+            <div id="playfield_container"></div>
+            
+        </div>
+
+        <!-- all scripts -->
+        <script src="../js_files/algorithm_menu.js"></script>
+        <script src="../js_files/playfield_main.js"></script>
+        <script src="../js_files/pathfinding_algos.js"></script>
+        <script src="../js_files/sorting_algos.js"></script>
+
+    </body>
+
+</html>
