@@ -18,8 +18,6 @@ function doOnLoad() {
 
 function doOnResize() {
 
-    fixBorder();
-
     if (waitingForDelay === false) {
 
         resetAlgo();
@@ -144,8 +142,10 @@ var playfield_menu:any = document.getElementById("playfield_menu");
 var playfield:any = document.getElementById("playfield");
 
 function fixBorder() {
-    playfield_menu.setAttribute("style", "min-height:0px");
-    playfield_menu.setAttribute("style", `min-height:${playfield.offsetHeight}px`);
+    setInterval(() => {
+        playfield_menu.setAttribute("style", "min-height:0px");
+        playfield_menu.setAttribute("style", `min-height:${playfield.offsetHeight}px`);
+    }, 50)
 }
 
 function resetChooseButton(id:string) {

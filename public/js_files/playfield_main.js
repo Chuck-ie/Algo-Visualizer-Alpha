@@ -15,7 +15,6 @@ function doOnLoad() {
     fixBorder();
 }
 function doOnResize() {
-    fixBorder();
     if (waitingForDelay === false) {
         resetAlgo();
         waitingForDelay = true;
@@ -115,8 +114,10 @@ function createEmptyPlayfield(width, height) {
 var playfield_menu = document.getElementById("playfield_menu");
 var playfield = document.getElementById("playfield");
 function fixBorder() {
-    playfield_menu.setAttribute("style", "min-height:0px");
-    playfield_menu.setAttribute("style", `min-height:${playfield.offsetHeight}px`);
+    setInterval(() => {
+        playfield_menu.setAttribute("style", "min-height:0px");
+        playfield_menu.setAttribute("style", `min-height:${playfield.offsetHeight}px`);
+    }, 50);
 }
 function resetChooseButton(id) {
     let algo_option = document.getElementsByClassName("choose_algo");

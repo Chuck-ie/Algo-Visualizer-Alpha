@@ -57,7 +57,7 @@
     "vary": "^1.1.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.12"
   },
   "scripts": {
     "start": "node index",
