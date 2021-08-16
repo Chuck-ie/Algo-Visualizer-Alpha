@@ -38,8 +38,8 @@
                         <i class="fas fa-angle-left"></i>
                     </p>
                     <div class="my_dropdown_options" id="my_menu1" contenteditable="false">
-                        <p>Pathfinding</p>
-                        <p>Sorting</p>
+                        <p onclick="ChooseAlgoType(my_menu1_header, this)">Pathfinding</p>
+                        <p onclick="ChooseAlgoType(my_menu1_header, this)">Sorting</p>
                     </div>
                 </div>
 
@@ -65,6 +65,15 @@
                         <p id="1.0" onclick="selectAlgoSpeed(my_menu3_header, my_menu3, this)">1.00x</p>
                     </div>
                 </div>
+
+                <div class="my_start_reset" onclick="newResetPlayfield(this)">
+                    <p>Reset Playfield</p>
+                </div>
+
+                <div class="my_start_reset" onclick="newTestStart(this)">
+                    <p>Start Algorithm</p>
+                </div>
+
 
                 <!-- <div class="dropdown_menu">
                     <button id="algo_type" class="drowdown_button">Choose Type</button>
@@ -120,10 +129,13 @@
         </div>
 
         <!-- all scripts -->
-        <script src="../js_files/algorithm_menu.js"></script>
-        <script src="../js_files/playfield_main.js"></script>
-        <script src="../js_files/pathfinding_algos.js"></script>
-        <script src="../js_files/sorting_algos.js"></script>
+        <script src="../js_files/playfieldMenu.js"></script>
+        <script src="../js_files/playfieldMain.js"></script>
+        <script src="../js_files/pathfindingAlgos.js"></script>
+        <script src="../js_files/HelpFunctionsPath.js"></script>
+        <script src="../js_files/sortingAlgos.js"></script>
+        <script src="../js_files/HelpFunctionsSort.js"></script>
+
         <script src="https://kit.fontawesome.com/01a92479e6.js" crossorigin="anonymous"></script>
 
     </body>

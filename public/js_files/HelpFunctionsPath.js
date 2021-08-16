@@ -25,7 +25,7 @@ function colorizeNode(currNode) {
     currNode.actualCell.setAttribute("style", "background-color:#FFE400;");
     setTimeout(() => {
         currNode.actualCell.setAttribute("style", "background-color:#FC4445;");
-    }, playfieldMenuRelated.colorizeDelay * playfieldMenuRelated.speedMultiplier);
+    }, playfieldMenu.colorizeDelay * playfieldMenu.speedMultiplier);
 }
 function markShortestPath(currNode) {
     if (currNode == undefined) {
@@ -35,7 +35,7 @@ function markShortestPath(currNode) {
         currNode.actualCell.setAttribute("style", "background-color:#86C232;");
         setTimeout(() => {
             markShortestPath(currNode.predecessorNode);
-        }, playfieldMenuRelated.colorizeDelay * playfieldMenuRelated.speedMultiplier);
+        }, playfieldMenu.colorizeDelay * playfieldMenu.speedMultiplier);
     }
     else {
         currNode.actualCell.setAttribute("style", "background-color:#86C232;");

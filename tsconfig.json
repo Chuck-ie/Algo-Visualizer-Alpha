@@ -6,7 +6,7 @@
     "strict": true,                                
     "noImplicitAny": true,                          
     "esModuleInterop": true,                        
-    "skipLibCheck": true,                           
+    "skipLibCheck": false,                           
     "forceConsistentCasingInFileNames": true,
     "outDir": "public/js_files",
     "rootDir": "ts_files_uncompiled"

@@ -1,67 +1,56 @@
 "use strict";
 var windowRelated = {
-    windowHeight: undefined,
-    windowWidth: undefined,
     waitingForDelay: false,
 };
-var playfieldRelated = {
+var playfield = {
     playfieldContainer: document.getElementById("playfield_container"),
     allRows: document.getElementsByClassName("gridRows"),
-    emptyPlayfieldActive: true,
-    sortingAlgoActive: false,
-    pathfindingAlgoActive: false,
+    emptyActive: true,
+    sortingActive: false,
+    pathingActive: false,
     runningAlgo: false,
 };
-window.onresize = doOnResize;
 window.onload = doOnLoad;
+window.onresize = doOnResize;
+function getWindowSize() {
+    return [window.innerHeight, window.innerWidth];
+}
 function doOnLoad() {
-    windowRelated.windowHeight = window.innerHeight;
-    windowRelated.windowWidth = window.innerWidth;
-    createEmptyPlayfield(windowRelated.windowWidth, windowRelated.windowHeight);
+    let windowSize = getWindowSize();
+    createEmptyPlayfield(windowSize[0], windowSize[1]);
 }
 function doOnResize() {
-    if (windowRelated.waitingForDelay === false) {
-        resetAlgo();
-        windowRelated.waitingForDelay = true;
-        windowRelated.windowHeight = window.innerHeight;
-        windowRelated.windowWidth = window.innerWidth;
-        if (windowRelated.emptyPlayfieldActive === true) {
-            clearPlayfield();
-            createEmptyPlayfield(windowRelated.windowWidth, windowRelated.windowHeight);
-        }
-        else if (windowRelated.sortingAlgoActive === true) {
-            clearPlayfield();
-            createSortingPlayfield((windowRelated.windowWidth * 0.5) / 16);
-        }
-        else if (windowRelated.pathfindingAlgoActive === true) {
-            clearPlayfield();
-            createPathfindingPlayfield(0.5 * windowRelated.windowWidth, 0.6 * windowRelated.windowHeight);
-        }
-        else {
-            clearPlayfield();
-        }
-        setTimeout(() => { windowRelated.waitingForDelay = false; }, windowRelated.delay);
+    let windowSize = getWindowSize();
+    clearPlayfield();
+    if (playfield.emptyActive === true) {
+        createEmptyPlayfield(windowSize[0], windowSize[1]);
+    }
+    else if (playfield.sortingActive === true) {
+        createSortingPlayfield((windowSize[1] * 0.5) / 16);
+    }
+    else if (playfield.pathingActive === true) {
+        createPathfindingPlayfield(windowSize[0] * 0.6, windowSize[1] * 0.5);
     }
 }
 function clearPlayfield() {
-    if (playfieldRelated.emptyPlayfieldActive === true) {
+    if (playfield.emptyPlayfieldActive === true) {
         let empty = document.getElementById("empty_playfield");
-        playfieldRelated.emptyPlayfieldActive = false;
+        playfield.emptyPlayfieldActive = false;
         empty.remove();
     }
     sortingRelated.allArrays = [];
-    for (let i = playfieldRelated.playfieldContainer.childNodes.length - 1; i >= 0; i--) {
-        playfieldRelated.playfieldContainer.childNodes[i].remove();
+    for (let i = playfield.playfieldContainer.childNodes.length - 1; i >= 0; i--) {
+        playfield.playfieldContainer.childNodes[i].remove();
     }
 }
-function createPathfindingPlayfield(width, height) {
-    playfieldRelated.pathfindingAlgoActive = true;
-    playfieldRelated.sortingAlgoActive = false;
+function createPathfindingPlayfield(height, width) {
+    playfield.pathfindingAlgoActive = true;
+    playfield.sortingAlgoActive = false;
     let rowCount = Math.floor(height / 22);
     let cellCount = Math.floor(width / 24);
     for (let i = 0; i < rowCount; i++) {
         let newRow = document.createElement("div");
-        playfieldRelated.playfieldContainer.appendChild(newRow).className = "gridRows";
+        playfield.playfieldContainer.appendChild(newRow).className = "gridRows";
     }
     for (let j = 0; j < rowCount; j++) {
         for (let k = 0; k < cellCount; k++) {
@@ -72,14 +61,14 @@ function createPathfindingPlayfield(width, height) {
                 newCell.setAttribute("style", "background-color:#2E9CCA;");
                 pathingRelated.startCell = newCell;
             }
-            playfieldRelated.allRows[j].appendChild(newCell).className = "gridCells";
+            playfield.allRows[j].appendChild(newCell).className = "gridCells";
         }
     }
 }
 function createSortingPlayfield(width) {
     let size = Math.floor(width);
-    playfieldRelated.sortingAlgoActive = true;
-    playfieldRelated.pathfindingAlgoActive = false;
+    playfield.sortingAlgoActive = true;
+    playfield.pathfindingAlgoActive = false;
     for (let i = 0; i < size; i++) {
         let newArray = document.createElement("div");
         let arrayHeight = (i * 10) + 10;
@@ -93,16 +82,16 @@ function createSortingPlayfield(width) {
         let newArray = sortingRelated.allArrays[randomID];
         let toBeRemoved = sortingRelated.allArrays.indexOf(newArray);
         sortingRelated.allArrays.splice(toBeRemoved, 1);
-        playfieldRelated.playfieldContainer.appendChild(newArray);
+        playfield.playfieldContainer.appendChild(newArray);
     }
 }
-function createEmptyPlayfield(width, height) {
+function createEmptyPlayfield(height, width) {
     let emptyPlayfield = document.createElement("div");
     emptyPlayfield.setAttribute("id", "empty_playfield");
     emptyPlayfield.setAttribute("style", `border-radius:0px 10px 10px 0px;color:black;min-height:${0.7 * height}px;min-width:${0.5 * width}px;background-color:white;text-align:center;font-size:22px;`);
     emptyPlayfield.innerHTML = "Select Algorithm Type!";
-    playfieldRelated.playfieldContainer.appendChild(emptyPlayfield);
-    playfieldRelated.emptyPlayfieldActive = true;
+    playfield.playfieldContainer.appendChild(emptyPlayfield);
+    playfield.emptyPlayfieldActive = true;
 }
 function resetChooseButton(id) {
     let algo_option = document.getElementsByClassName("choose_algo");

@@ -15,5 +15,5 @@ function confirmArrayOrder(currArray) {
         if (currArray[1] !== undefined) {
             confirmArrayOrder(currArray.slice(1));
         }
-    }, playfieldMenuRelated.colorizeDelay / 2);
+    }, playfieldMenu.colorizeDelay / 2);
 }

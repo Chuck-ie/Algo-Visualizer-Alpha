@@ -1,59 +1,57 @@
 
-var playfieldMenuRelated:any = {
-    algoSelected: false,
+var playfieldMenu:any = {
+
     typeSelected: false,
-    activeAlgo: undefined,
-    speedMultiplier: undefined,
+    algoSelected: false,
     speedSelected: false,
+    speedMultiplier: undefined,
+    activeAlgoNameName: undefined,
     choose_option: undefined,
     colorizeDelay: 100,
 }
 
-function chooseAlgoType(id:string) {
+function ChooseAlgoType(myMenuHeaderX:any, self:any) {
 
-    windowRelated.windowWidth = window.innerWidth;
-    windowRelated.windowHeight = window.innerHeight;
-    windowRelated.typeSelected = true;
-    playfieldMenuRelated.algoSelected = false;
-    playfieldMenuRelated.choose_option = document.getElementById("algo_type");
-    playfieldMenuRelated.choose_option.innerHTML = id;
+    setHeaderName(myMenuHeaderX, self);
+    let windowSize:any = getWindowSize();
+    playfieldMenu.activeAlgoName = self.innerHTML;
+    playfieldMenu.typeSelected = true;
+    playfieldMenu.algoSelected = false;
     clearPlayfield();
 
-    switch (id) {
+    switch(playfieldMenu.activeAlgoName) {
 
         case "Sorting":
-            resetChooseButton("2")
-            createSortingPlayfield((windowRelated.windowWidth*0.5)/16);
+            createSortingPlayfield((windowSize[1] * 0.5) / 16);
             break;
 
         case "Pathfinding":
-            resetChooseButton("3");
-            createPathfindingPlayfield(0.5*windowRelated.windowWidth, 0.6*windowRelated.windowHeight);
+            createPathfindingPlayfield(windowSize[0] * 0.6, windowSize[1] * 0.5);
             break;
     }
 }
 
 function selectAlgo(myMenuHeaderX:any, self:any) {
-    playfieldMenuRelated.choose_option = document.getElementsByClassName("choose_algo");
-    playfieldMenuRelated.activeAlgo = self.id;
-    playfieldMenuRelated.algoSelected = true;
+    playfieldMenu.choose_option = document.getElementsByClassName("choose_algo");
+    playfieldMenu.activeAlgoName = self.id;
+    playfieldMenu.algoSelected = true;
 
-    for (let i = 0; i < playfieldMenuRelated.choose_option.length; i++) {
-        playfieldMenuRelated.choose_option[i].innerHTML = self.id;
+    for (let i = 0; i < playfieldMenu.choose_option.length; i++) {
+        playfieldMenu.choose_option[i].innerHTML = self.id;
     }
 }
 
 function selectAlgoSpeed(myMenuHeaderX:any, myMenuX:any, self:any) {
 
-    playfieldMenuRelated.speedMultiplier = 1 - Number(self.id);
-    playfieldMenuRelated.speedSelected = true;    
-    setHeaderName(myMenuHeaderX, self)
+    playfieldMenu.speedMultiplier = 1 - Number(self.id);
+    playfieldMenu.speedSelected = true;    
+    setHeaderName(myMenuHeaderX, self);
 }
 
 function testStart() {
 
     // typeSelected is not entirely necessary 
-    if (playfieldMenuRelated.algoSelected === true && playfieldMenuRelated.speedSelected === true && playfieldMenuRelated.typeSelected === true) {
+    if (playfieldMenu.algoSelected === true && playfieldMenu.speedSelected === true && playfieldMenu.typeSelected === true) {
         startAlgo();
 
     } else {
@@ -68,7 +66,7 @@ function startAlgo() {
 
     playfieldDivs.forEach((node:any) => myArray.push(node));
 
-    switch (playfieldMenuRelated.activeAlgo) {
+    switch (playfieldMenu.activeAlgoName) {
         // Pathfinding options
         case "Dijkstra":
             if (pathingRelated.targetCell !== undefined) {
@@ -91,22 +89,56 @@ function startAlgo() {
     }
 }
 
+
+function newTestStart(self:any) {
+
+    StartResetGlow(self);
+    doOnLoad();
+    
+
+}
+
+function newStart() {
+
+
+
+}
+
+function newResetPlayfield(self:any) {
+
+    StartResetGlow(self);
+
+
+}
+
+function StartResetGlow(self:any) {
+
+    self.style.backgroundColor = "#14A76C";
+    self.style.filter = "brightness(1.2)";
+    setTimeout(() => {
+        self.style.backgroundColor = "#4056A1";
+        self.style.filter = "brightness(1.0)";
+    }, 1000);
+}
+
+
+
 function resetAlgo() {
     
     windowRelated.windowWidth = window.innerWidth;
     windowRelated.windowHeight = window.innerHeight;
 
-    if (playfieldRelated.sortingAlgoActive === true) {
-        playfieldRelated.sortingAlgoActive = false;
+    if (playfield.sortingAlgoActive === true) {
+        playfield.sortingAlgoActive = false;
         clearPlayfield();
         createSortingPlayfield(windowRelated.windowWidth*0.5/16);
 
-    } else if (playfieldRelated.pathfindingAlgoActive === true) {
+    } else if (playfield.pathfindingAlgoActive === true) {
         pathingRelated.targetFound = false;
         pathingRelated.targetCell = undefined;
         pathingRelated.allCells = undefined;
         pathingRelated.allNodes = new Array<myNode>();
-        playfieldRelated.pathfindingAlgoActive = false;
+        playfield.pathfindingAlgoActive = false;
         clearPlayfield();
         createPathfindingPlayfield(0.5*windowRelated.windowWidth, 0.6*windowRelated.windowHeight);
     }
@@ -114,7 +146,7 @@ function resetAlgo() {
 
 function chooseTargetCell(id:number) {
 
-    if (playfieldRelated.runningAlgo === false) {
+    if (playfield.runningAlgo === false) {
 
         if (pathingRelated.targetCell !== undefined) {
             pathingRelated.targetCell.setAttribute("style", "background-color:white;");

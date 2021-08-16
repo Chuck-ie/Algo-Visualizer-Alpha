@@ -1,5 +1,4 @@
 
-
 function checkNeighbours(currNode:myNode, neighboursArr:any) {
 
     let allCells:any = document.getElementsByClassName("gridCells");
@@ -33,7 +32,7 @@ function colorizeNode(currNode:myNode) {
     
     setTimeout(() => {
         currNode.actualCell.setAttribute("style", "background-color:#FC4445;")
-    }, playfieldMenuRelated.colorizeDelay * playfieldMenuRelated.speedMultiplier);
+    }, playfieldMenu.colorizeDelay * playfieldMenu.speedMultiplier);
 }
 
 function markShortestPath(currNode:myNode | undefined) {
@@ -46,7 +45,7 @@ function markShortestPath(currNode:myNode | undefined) {
         currNode!.actualCell.setAttribute("style", "background-color:#86C232;");
         setTimeout(() => {
             markShortestPath(currNode!.predecessorNode);
-        }, playfieldMenuRelated.colorizeDelay * playfieldMenuRelated.speedMultiplier)
+        }, playfieldMenu.colorizeDelay * playfieldMenu.speedMultiplier)
 
     } else {
         currNode!.actualCell.setAttribute("style", "background-color:#86C232;");
