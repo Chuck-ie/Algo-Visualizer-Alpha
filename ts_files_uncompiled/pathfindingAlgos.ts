@@ -1,18 +1,38 @@
 
 interface myNode {
+    
     actualCell: any;
-    predecessorNode:myNode | undefined;
+    predecessorNode: myNode | undefined;
     shortestPath: number;
 }
 
+var pathingRelated:any = {
+
+    allNodes: new Array<myNode>(),
+    visitedNodes: new Array<myNode>(),
+    startNode: {actualCell:undefined, predecessorNode:undefined, shortestPath:0},
+    targetCell: undefined,
+    targetFound: false,
+    startCell: undefined,
+    targetID: undefined,
+}
+
+
+function newDijkstra(startCell:any, targetCell:any, rowSize:number) {
+
+    
+
+
+}
+
+
 function dijkstra(start:any, target:any, rowSize:number) {
 
-    myGlobalVars.allCells = document.getElementsByClassName("gridCells");
-    myGlobalVars.targetID = target.id;
-    myGlobalVars.startNode.actualCell = start;
+    pathingRelated.targetID = target.id;
+    pathingRelated.startNode.actualCell = start;
     // append start- and targetNode to allNodes (start always index 1; target always index 0)
-    myGlobalVars.allNodes.push(myGlobalVars.startNode);
-    dijkstraLoop(myGlobalVars.startNode, rowSize);
+    pathingRelated.allNodes.push(pathingRelated.startNode);
+    dijkstraLoop(pathingRelated.startNode, rowSize);
 }
 
 function dijkstraLoop(currNode:myNode, rowSize:number, j=0) {
@@ -20,7 +40,7 @@ function dijkstraLoop(currNode:myNode, rowSize:number, j=0) {
     // let neighboursArr = [1, -1, rowSize, -rowSize];
     let neighboursArr = [-1, -rowSize-1, -rowSize, -rowSize+1, 1, rowSize+1, rowSize, rowSize-1];
 
-    if (currNode.actualCell.id == myGlobalVars.targetID) {
+    if (currNode.actualCell.id == pathingRelated.targetID) {
         markShortestPath(currNode);
         return;
     }
@@ -32,13 +52,13 @@ function dijkstraLoop(currNode:myNode, rowSize:number, j=0) {
     j += 1;
     checkNeighbours(currNode, neighboursArr)
 
-    myGlobalVars.visitedNodes.push(currNode);
+    pathingRelated.visitedNodes.push(currNode);
     let nextNode:myNode = getNextNode(currNode);
 
     if (nextNode.actualCell != undefined) {
         setTimeout(() => {
             dijkstraLoop(nextNode, rowSize, j);
-        }, myGlobalVars.colorizeDelay * myGlobalVars.speedMultiplier)
+        }, pathingRelated.colorizeDelay * pathingRelated.speedMultiplier)
 
     } else {
         alert(`There is no Path to the specified target.\nShortest path: ${Infinity}`)
@@ -47,24 +67,26 @@ function dijkstraLoop(currNode:myNode, rowSize:number, j=0) {
  
 function checkNeighbours(currNode:myNode, neighboursArr:any) {
 
+    let allCells:any = document.getElementsByClassName("gridCells");
+
     if (neighboursArr.length === 0) {
         return;
     }
 
     let validNeighbour:myNode = {actualCell:undefined, predecessorNode:currNode, shortestPath:Infinity};
     let currID:number = Number(currNode.actualCell.id);
-    let notValid:any = myGlobalVars.allNodes.map((node:myNode) => {
+    let notValid:any = pathingRelated.allNodes.map((node:myNode) => {
         return Number(node.actualCell.id);
     })
 
-    if (currID + neighboursArr[0] >= 0 && currID + neighboursArr[0] < myGlobalVars.allCells.length) {
+    if (currID + neighboursArr[0] >= 0 && currID + neighboursArr[0] < allCells.length) {
         if (notValid.includes(currID + neighboursArr[0])) {
             checkNeighbours(currNode, neighboursArr.slice(1));
 
         } else {
-            validNeighbour.actualCell = myGlobalVars.allCells[currID + neighboursArr[0]];
+            validNeighbour.actualCell = allCells[currID + neighboursArr[0]];
             validNeighbour.shortestPath = currNode.shortestPath + 1;
-            myGlobalVars.allNodes.push(validNeighbour);
+            pathingRelated.allNodes.push(validNeighbour);
             checkNeighbours(currNode, neighboursArr.slice(1));
         }
     }
@@ -76,7 +98,7 @@ function colorizeNode(currNode:myNode) {
     
     setTimeout(() => {
         currNode.actualCell.setAttribute("style", "background-color:#FC4445;")
-    }, myGlobalVars.colorizeDelay * myGlobalVars.speedMultiplier);
+    }, playfieldMenuRelated.colorizeDelay * playfieldMenuRelated.speedMultiplier);
 }
 
 function markShortestPath(currNode:myNode | undefined) {
@@ -89,7 +111,7 @@ function markShortestPath(currNode:myNode | undefined) {
         currNode!.actualCell.setAttribute("style", "background-color:#86C232;");
         setTimeout(() => {
             markShortestPath(currNode!.predecessorNode);
-        }, myGlobalVars.colorizeDelay * myGlobalVars.speedMultiplier)
+        }, playfieldMenuRelated.colorizeDelay * playfieldMenuRelated.speedMultiplier)
 
     } else {
         currNode!.actualCell.setAttribute("style", "background-color:#86C232;");
@@ -99,8 +121,8 @@ function markShortestPath(currNode:myNode | undefined) {
 function getNextNode(currNode:myNode) {
 
     let next:myNode = {actualCell:undefined, predecessorNode:undefined, shortestPath:Infinity};
-    let validNextNodes = myGlobalVars.allNodes.filter((node:myNode) => {
-        return !myGlobalVars.visitedNodes.includes(node);
+    let validNextNodes = pathingRelated.allNodes.filter((node:myNode) => {
+        return !pathingRelated.visitedNodes.includes(node);
     })
     
     for (let i = 0; i < validNextNodes.length; i++) {

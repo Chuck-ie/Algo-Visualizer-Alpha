@@ -1,84 +1,67 @@
 "use strict";
-// global vars used all over the project
-var myGlobalVars = {
-    delay: 50,
-    playfieldContainer: document.getElementById("playfield_container"),
-    waitingForDelay: false,
+var windowRelated = {
     windowHeight: undefined,
     windowWidth: undefined,
-    allArrays: [],
+    waitingForDelay: false,
+};
+var playfieldRelated = {
+    playfieldContainer: document.getElementById("playfield_container"),
+    allRows: document.getElementsByClassName("gridRows"),
     emptyPlayfieldActive: true,
     sortingAlgoActive: false,
     pathfindingAlgoActive: false,
-    choose_option: undefined,
-    typeSelected: false,
-    allRows: document.getElementsByClassName("gridRows"),
-    startCell: undefined,
-    algoSelected: false,
-    activeAlgo: undefined,
-    colorizeDelay: 100,
-    speedMultiplier: undefined,
-    speedSelected: false,
-    targetCell: undefined,
     runningAlgo: false,
-    targetFound: false,
-    allCells: undefined,
-    allNodes: new Array(),
-    visitedNodes: new Array(),
-    targetID: undefined,
-    startNode: { actualCell: undefined, predecessorNode: undefined, shortestPath: 0 },
 };
-// all used window.functions + do on start function calls
 window.onresize = doOnResize;
 window.onload = doOnLoad;
 function doOnLoad() {
-    myGlobalVars.windowHeight = window.innerHeight;
-    myGlobalVars.windowWidth = window.innerWidth;
-    createEmptyPlayfield(myGlobalVars.windowWidth, myGlobalVars.windowHeight);
+    windowRelated.windowHeight = window.innerHeight;
+    windowRelated.windowWidth = window.innerWidth;
+    createEmptyPlayfield(windowRelated.windowWidth, windowRelated.windowHeight);
 }
 function doOnResize() {
-    if (myGlobalVars.waitingForDelay === false) {
+    if (windowRelated.waitingForDelay === false) {
         resetAlgo();
-        myGlobalVars.waitingForDelay = true;
-        myGlobalVars.windowHeight = window.innerHeight;
-        myGlobalVars.windowWidth = window.innerWidth;
-        if (myGlobalVars.emptyPlayfieldActive === true) {
+        windowRelated.waitingForDelay = true;
+        windowRelated.windowHeight = window.innerHeight;
+        windowRelated.windowWidth = window.innerWidth;
+        if (windowRelated.emptyPlayfieldActive === true) {
             clearPlayfield();
-            createEmptyPlayfield(myGlobalVars.windowWidth, myGlobalVars.windowHeight);
+            createEmptyPlayfield(windowRelated.windowWidth, windowRelated.windowHeight);
         }
-        else if (myGlobalVars.sortingAlgoActive === true) {
+        else if (windowRelated.sortingAlgoActive === true) {
             clearPlayfield();
-            createSortingPlayfield((myGlobalVars.windowWidth * 0.5) / 16);
+            createSortingPlayfield((windowRelated.windowWidth * 0.5) / 16);
         }
-        else if (myGlobalVars.pathfindingAlgoActive === true) {
+        else if (windowRelated.pathfindingAlgoActive === true) {
             clearPlayfield();
-            createPathfindingPlayfield(0.5 * myGlobalVars.windowWidth, 0.6 * myGlobalVars.windowHeight);
+            createPathfindingPlayfield(0.5 * windowRelated.windowWidth, 0.6 * windowRelated.windowHeight);
         }
         else {
             clearPlayfield();
         }
-        setTimeout(() => { myGlobalVars.waitingForDelay = false; }, myGlobalVars.delay);
+        setTimeout(() => { windowRelated.waitingForDelay = false; }, windowRelated.delay);
     }
 }
 function clearPlayfield() {
-    if (myGlobalVars.emptyPlayfieldActive === true) {
+    if (playfieldRelated.emptyPlayfieldActive === true) {
         let empty = document.getElementById("empty_playfield");
-        myGlobalVars.emptyPlayfieldActive = false;
+        playfieldRelated.emptyPlayfieldActive = false;
         empty.remove();
     }
-    myGlobalVars.allArrays = [];
-    for (let i = myGlobalVars.playfieldContainer.childNodes.length - 1; i >= 0; i--) {
-        myGlobalVars.playfieldContainer.childNodes[i].remove();
+    sortingRelated.allArrays = [];
+    for (let i = playfieldRelated.playfieldContainer.childNodes.length - 1; i >= 0; i--) {
+        playfieldRelated.playfieldContainer.childNodes[i].remove();
     }
 }
 function createPathfindingPlayfield(width, height) {
-    myGlobalVars.pathfindingAlgoActive = true;
-    myGlobalVars.sortingAlgoActive = false;
+    playfieldRelated.pathfindingAlgoActive = true;
+    playfieldRelated.sortingAlgoActive = false;
     let rowCount = Math.floor(height / 22);
     let cellCount = Math.floor(width / 24);
     for (let i = 0; i < rowCount; i++) {
         let newRow = document.createElement("div");
-        myGlobalVars.playfieldContainer.appendChild(newRow).className = "gridRows";
+        playfieldRelated.playfieldContainer.appendChild(newRow).className = "gridRows";
     }
     for (let j = 0; j < rowCount; j++) {
         for (let k = 0; k < cellCount; k++) {
@@ -87,30 +70,30 @@ function createPathfindingPlayfield(width, height) {
             newCell.setAttribute("onclick", "chooseTargetCell(this.id)");
             if (j == Math.floor(rowCount / 2) && k == Math.floor(cellCount / 2)) {
                 newCell.setAttribute("style", "background-color:#2E9CCA;");
-                myGlobalVars.startCell = newCell;
+                pathingRelated.startCell = newCell;
             }
-            myGlobalVars.allRows[j].appendChild(newCell).className = "gridCells";
+            playfieldRelated.allRows[j].appendChild(newCell).className = "gridCells";
         }
     }
 }
 function createSortingPlayfield(width) {
     let size = Math.floor(width);
-    myGlobalVars.sortingAlgoActive = true;
-    myGlobalVars.pathfindingAlgoActive = false;
+    playfieldRelated.sortingAlgoActive = true;
+    playfieldRelated.pathfindingAlgoActive = false;
     for (let i = 0; i < size; i++) {
         let newArray = document.createElement("div");
         let arrayHeight = (i * 10) + 10;
         newArray.setAttribute("class", "sortingArray");
         newArray.setAttribute("style", `min-width:10px;min-height:${arrayHeight}px;background-color:white;margin-right: 2px;border: 1px solid gray;position: relative;display:inline-block;`);
         newArray.setAttribute("id", i);
-        myGlobalVars.allArrays.push(newArray);
+        sortingRelated.allArrays.push(newArray);
     }
-    for (let j = myGlobalVars.allArrays.length; j > 0; j--) {
+    for (let j = sortingRelated.allArrays.length; j > 0; j--) {
         let randomID = Math.floor(Math.random() * j);
-        let newArray = myGlobalVars.allArrays[randomID];
-        let toBeRemoved = myGlobalVars.allArrays.indexOf(newArray);
-        myGlobalVars.allArrays.splice(toBeRemoved, 1);
-        myGlobalVars.playfieldContainer.appendChild(newArray);
+        let newArray = sortingRelated.allArrays[randomID];
+        let toBeRemoved = sortingRelated.allArrays.indexOf(newArray);
+        sortingRelated.allArrays.splice(toBeRemoved, 1);
+        playfieldRelated.playfieldContainer.appendChild(newArray);
     }
 }
 function createEmptyPlayfield(width, height) {
@@ -118,8 +101,8 @@ function createEmptyPlayfield(width, height) {
     emptyPlayfield.setAttribute("id", "empty_playfield");
     emptyPlayfield.setAttribute("style", `border-radius:0px 10px 10px 0px;color:black;min-height:${0.7 * height}px;min-width:${0.5 * width}px;background-color:white;text-align:center;font-size:22px;`);
     emptyPlayfield.innerHTML = "Select Algorithm Type!";
-    myGlobalVars.playfieldContainer.appendChild(emptyPlayfield);
-    myGlobalVars.emptyPlayfieldActive = true;
+    playfieldRelated.playfieldContainer.appendChild(emptyPlayfield);
+    playfieldRelated.emptyPlayfieldActive = true;
 }
 function resetChooseButton(id) {
     let algo_option = document.getElementsByClassName("choose_algo");
