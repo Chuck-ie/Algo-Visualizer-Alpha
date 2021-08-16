@@ -9,7 +9,7 @@ var playfieldMenu = {
     choose_option: undefined,
     colorizeDelay: 100,
 };
-function ChooseAlgoType(myMenuHeaderX, self) {
+function chooseAlgoType(myMenuHeaderX, self) {
     setHeaderName(myMenuHeaderX, self);
     let windowSize = getWindowSize();
     playfieldMenu.activeAlgoName = self.innerHTML;

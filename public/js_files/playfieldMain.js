@@ -2,36 +2,13 @@
 var playfield = {
     playfieldContainer: document.getElementById("playfield_container"),
     allRows: document.getElementsByClassName("row"),
-    emptyActive: false,
+    isResizing: false,
+    emptyActive: true,
     sortingActive: false,
     pathingActive: false,
 };
-window.onload = doOnLoad;
-window.onresize = doOnResize;
-function getWindowSize() {
-    return [window.innerHeight, window.innerWidth];
-}
-function doOnLoad() {
-    let windowSize = getWindowSize();
-    createEmptyPlayfield(windowSize[0], windowSize[1]);
-}
-function doOnResize() {
-    let test = document.getElementById("playfield_container");
-    console.log(test.style.minHeight);
-    let windowSize = getWindowSize();
-    clearPlayfield();
-    if (playfield.emptyActive === true) {
-        createEmptyPlayfield(windowSize[0], windowSize[1]);
-    }
-    else if (playfield.sortingActive === true) {
-        createSortingPlayfield((windowSize[1] * 0.5) / 16);
-    }
-    else if (playfield.pathingActive === true) {
-        createPathingPlayfield(windowSize[0] * 0.6, windowSize[1] * 0.5);
-    }
-}
 function clearPlayfield() {
-    for (let i = playfield.playfield_container.childNodes.length - 1; i >= 0; i--) {
+    for (let i = playfield.playfieldContainer.childNodes.length - 1; i >= 0; i--) {
         playfield.playfieldContainer.childNodes[i].remove();
     }
 }
@@ -60,6 +37,7 @@ function createPathingPlayfield(height, width) {
             playfield.allRows[j].appendChild(newCell).className = "cell";
         }
     }
+    setMenuHeight();
 }
 function createSortingPlayfield(width) {
     // active playfield = true, else = false
@@ -73,7 +51,7 @@ function createSortingPlayfield(width) {
         let elementHeight = (i * 10) + 10;
         newElement.id = `${i}`;
         newElement.className = "sortingElement";
-        newElement.setAttribute("style", `min-width:10px;min-height:${elementHeight}px;margin-right:2px;border:1px solid gray;position:relative;display:inline-block;`);
+        newElement.style.minHeight = `${elementHeight}px`;
         sortingRelated.allSortElements.push(newElement);
     }
     // randomize element order
@@ -83,6 +61,7 @@ function createSortingPlayfield(width) {
         sortingRelated.allSortElements.splice(randomIndex, 1);
         playfield.playfieldContainer.appendChild(randomElement);
     }
+    setMenuHeight();
 }
 function createEmptyPlayfield(height, width) {
     // active playfield = true, else = false
@@ -91,25 +70,8 @@ function createEmptyPlayfield(height, width) {
     playfield.emptyActive = true;
     // create empty playfield
     let emptyElement = document.createElement("div");
-    emptyElement.setAttribute("style", `border-radius:0px 10px 10px 0px;color:black;min-height:${0.7 * height}px;min-width:${0.5 * width}px;background-color:white;text-align:center;font-size:22px;`);
+    emptyElement.setAttribute("style", `border-radius:0px 10px 10px 0px;color:black;min-height:${0.6 * height}px;min-width:${0.5 * width}px;background-color:white;text-align:center;font-size:22px;`);
     emptyElement.innerHTML = "Select Algorithm Type first!";
     playfield.playfieldContainer.appendChild(emptyElement);
-}
-function showDropdown(myMenuHeaderX, myMenuX) {
-    if (myMenuX.contentEditable === "true") {
-        myMenuX.contentEditable = "false";
-        myMenuX.style.display = "none";
-        myMenuX.style.filter = "brightness(1.0)";
-        myMenuHeaderX.children[0].className = "fas fa-angle-left";
-        myMenuHeaderX.style.backgroundColor = "#4056A1";
-        myMenuHeaderX.style.filter = "brightness(1.0)";
-    }
-    else {
-        myMenuX.contentEditable = "true";
-        myMenuX.style.display = "block";
-        myMenuX.style.filter = "brightness(1.2)";
-        myMenuHeaderX.children[0].className = "fas fa-angle-down";
-        myMenuHeaderX.style.backgroundColor = "#14A76C";
-        myMenuHeaderX.style.filter = "brightness(1.2)";
-    }
+    setMenuHeight();
 }

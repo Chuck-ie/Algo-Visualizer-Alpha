@@ -11,7 +11,7 @@ var playfieldMenu:any = {
     colorizeDelay: 100,
 }
 
-function ChooseAlgoType(myMenuHeaderX:any, self:any) {
+function chooseAlgoType(myMenuHeaderX:any, self:any) {
 
     setHeaderName(myMenuHeaderX, self);
     let windowSize:any = getWindowSize();
