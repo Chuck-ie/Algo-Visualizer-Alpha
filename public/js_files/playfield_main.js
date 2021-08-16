@@ -1,71 +1,84 @@
 "use strict";
 // global vars used all over the project
-const delay = 50;
-const playfieldContainer = document.getElementById("playfield_container");
-var waitingForDelay = false;
-var windowHeight;
-var windowWidth;
+var myGlobalVars = {
+    delay: 50,
+    playfieldContainer: document.getElementById("playfield_container"),
+    waitingForDelay: false,
+    windowHeight: undefined,
+    windowWidth: undefined,
+    allArrays: [],
+    emptyPlayfieldActive: true,
+    sortingAlgoActive: false,
+    pathfindingAlgoActive: false,
+    choose_option: undefined,
+    typeSelected: false,
+    allRows: document.getElementsByClassName("gridRows"),
+    startCell: undefined,
+    algoSelected: false,
+    activeAlgo: undefined,
+    colorizeDelay: 100,
+    speedMultiplier: undefined,
+    speedSelected: false,
+    targetCell: undefined,
+    runningAlgo: false,
+    targetFound: false,
+    allCells: undefined,
+    allNodes: new Array(),
+    visitedNodes: new Array(),
+    targetID: undefined,
+    startNode: { actualCell: undefined, predecessorNode: undefined, shortestPath: 0 },
+};
 // all used window.functions + do on start function calls
 window.onresize = doOnResize;
 window.onload = doOnLoad;
 function doOnLoad() {
-    windowHeight = window.innerHeight;
-    windowWidth = window.innerWidth;
-    createEmptyPlayfield(windowWidth, windowHeight);
-    fixBorder();
+    myGlobalVars.windowHeight = window.innerHeight;
+    myGlobalVars.windowWidth = window.innerWidth;
+    createEmptyPlayfield(myGlobalVars.windowWidth, myGlobalVars.windowHeight);
 }
 function doOnResize() {
-    if (waitingForDelay === false) {
+    if (myGlobalVars.waitingForDelay === false) {
         resetAlgo();
-        waitingForDelay = true;
-        windowHeight = window.innerHeight;
-        windowWidth = window.innerWidth;
-        if (myBools.emptyPlayfieldActive === true) {
+        myGlobalVars.waitingForDelay = true;
+        myGlobalVars.windowHeight = window.innerHeight;
+        myGlobalVars.windowWidth = window.innerWidth;
+        if (myGlobalVars.emptyPlayfieldActive === true) {
             clearPlayfield();
-            createEmptyPlayfield(windowWidth, windowHeight);
+            createEmptyPlayfield(myGlobalVars.windowWidth, myGlobalVars.windowHeight);
         }
-        else if (myBools.sortingAlgoActive === true) {
+        else if (myGlobalVars.sortingAlgoActive === true) {
             clearPlayfield();
-            createSortingPlayfield((windowWidth * 0.5) / 16);
+            createSortingPlayfield((myGlobalVars.windowWidth * 0.5) / 16);
         }
-        else if (myBools.pathfindingAlgoActive === true) {
+        else if (myGlobalVars.pathfindingAlgoActive === true) {
             clearPlayfield();
-            createPathfindingPlayfield(0.5 * windowWidth, 0.6 * windowHeight);
+            createPathfindingPlayfield(0.5 * myGlobalVars.windowWidth, 0.6 * myGlobalVars.windowHeight);
         }
         else {
             clearPlayfield();
         }
-        setTimeout(() => { waitingForDelay = false; }, delay);
+        setTimeout(() => { myGlobalVars.waitingForDelay = false; }, myGlobalVars.delay);
     }
 }
-// Important globalvars to clear the Playfield
-var myBools = {
-    sortingAlgoActive: false,
-    pathfindingAlgoActive: false,
-    emptyPlayfieldActive: true,
-};
 function clearPlayfield() {
-    if (myBools.emptyPlayfieldActive === true) {
+    if (myGlobalVars.emptyPlayfieldActive === true) {
         let empty = document.getElementById("empty_playfield");
-        myBools.emptyPlayfieldActive = false;
+        myGlobalVars.emptyPlayfieldActive = false;
         empty.remove();
     }
-    allArrays = [];
-    for (let i = playfieldContainer.childNodes.length - 1; i >= 0; i--) {
-        playfieldContainer.childNodes[i].remove();
+    myGlobalVars.allArrays = [];
+    for (let i = myGlobalVars.playfieldContainer.childNodes.length - 1; i >= 0; i--) {
+        myGlobalVars.playfieldContainer.childNodes[i].remove();
     }
 }
-// Important globalvars and functions for PathfindingAlgoPlayfield
-var allRows = document.getElementsByClassName("gridRows");
-var startCell;
 function createPathfindingPlayfield(width, height) {
-    myBools.pathfindingAlgoActive = true;
-    myBools.sortingAlgoActive = false;
+    myGlobalVars.pathfindingAlgoActive = true;
+    myGlobalVars.sortingAlgoActive = false;
     let rowCount = Math.floor(height / 22);
     let cellCount = Math.floor(width / 24);
     for (let i = 0; i < rowCount; i++) {
         let newRow = document.createElement("div");
-        playfieldContainer.appendChild(newRow).className = "gridRows";
+        myGlobalVars.playfieldContainer.appendChild(newRow).className = "gridRows";
     }
     for (let j = 0; j < rowCount; j++) {
         for (let k = 0; k < cellCount; k++) {
@@ -74,50 +87,39 @@ function createPathfindingPlayfield(width, height) {
             newCell.setAttribute("onclick", "chooseTargetCell(this.id)");
             if (j == Math.floor(rowCount / 2) && k == Math.floor(cellCount / 2)) {
                 newCell.setAttribute("style", "background-color:#2E9CCA;");
-                startCell = newCell;
+                myGlobalVars.startCell = newCell;
             }
-            allRows[j].appendChild(newCell).className = "gridCells";
+            myGlobalVars.allRows[j].appendChild(newCell).className = "gridCells";
         }
     }
 }
-// Important globalvars and functions for SortingAlgoPlayfield
-var allArrays = [];
 function createSortingPlayfield(width) {
     let size = Math.floor(width);
-    myBools.sortingAlgoActive = true;
-    myBools.pathfindingAlgoActive = false;
+    myGlobalVars.sortingAlgoActive = true;
+    myGlobalVars.pathfindingAlgoActive = false;
     for (let i = 0; i < size; i++) {
         let newArray = document.createElement("div");
         let arrayHeight = (i * 10) + 10;
         newArray.setAttribute("class", "sortingArray");
         newArray.setAttribute("style", `min-width:10px;min-height:${arrayHeight}px;background-color:white;margin-right: 2px;border: 1px solid gray;position: relative;display:inline-block;`);
         newArray.setAttribute("id", i);
-        allArrays.push(newArray);
+        myGlobalVars.allArrays.push(newArray);
     }
-    for (let j = allArrays.length; j > 0; j--) {
+    for (let j = myGlobalVars.allArrays.length; j > 0; j--) {
         let randomID = Math.floor(Math.random() * j);
-        let newArray = allArrays[randomID];
-        let toBeRemoved = allArrays.indexOf(newArray);
-        allArrays.splice(toBeRemoved, 1);
-        playfieldContainer.appendChild(newArray);
+        let newArray = myGlobalVars.allArrays[randomID];
+        let toBeRemoved = myGlobalVars.allArrays.indexOf(newArray);
+        myGlobalVars.allArrays.splice(toBeRemoved, 1);
+        myGlobalVars.playfieldContainer.appendChild(newArray);
     }
 }
 function createEmptyPlayfield(width, height) {
     let emptyPlayfield = document.createElement("div");
     emptyPlayfield.setAttribute("id", "empty_playfield");
-    emptyPlayfield.setAttribute("style", `min-height:${0.7 * height}px;min-width:${0.5 * width}px;background-color:white;text-align:center;font-size:22px;`);
+    emptyPlayfield.setAttribute("style", `border-radius:0px 10px 10px 0px;color:black;min-height:${0.7 * height}px;min-width:${0.5 * width}px;background-color:white;text-align:center;font-size:22px;`);
     emptyPlayfield.innerHTML = "Select Algorithm Type!";
-    playfieldContainer.appendChild(emptyPlayfield);
-    myBools.emptyPlayfieldActive = true;
-}
-// Important globalvars and functions to fix the Playfield Border and Button
-var playfield_menu = document.getElementById("playfield_menu");
-var playfield = document.getElementById("playfield");
-function fixBorder() {
-    setInterval(() => {
-        playfield_menu.setAttribute("style", "min-height:0px");
-        playfield_menu.setAttribute("style", `min-height:${playfield.offsetHeight}px`);
-    }, 50);
+    myGlobalVars.playfieldContainer.appendChild(emptyPlayfield);
+    myGlobalVars.emptyPlayfieldActive = true;
 }
 function resetChooseButton(id) {
     let algo_option = document.getElementsByClassName("choose_algo");
@@ -134,5 +136,23 @@ function resetChooseButton(id) {
             currMenu = document.getElementById("menu" + String(j));
             currMenu.setAttribute("style", "display:none;");
         }
+    }
+}
+function showDropdown(myMenuHeaderX, myMenuX) {
+    if (myMenuX.contentEditable === "true") {
+        myMenuX.contentEditable = "false";
+        myMenuX.style.display = "none";
+        myMenuX.style.filter = "brightness(1.0)";
+        myMenuHeaderX.children[0].className = "fas fa-angle-left";
+        myMenuHeaderX.style.backgroundColor = "#4056A1";
+        myMenuHeaderX.style.filter = "brightness(1.0)";
+    }
+    else {
+        myMenuX.contentEditable = "true";
+        myMenuX.style.display = "block";
+        myMenuX.style.filter = "brightness(1.2)";
+        myMenuHeaderX.children[0].className = "fas fa-angle-down";
+        myMenuHeaderX.style.backgroundColor = "#14A76C";
+        myMenuHeaderX.style.filter = "brightness(1.2)";
     }
 }

@@ -9,39 +9,64 @@
         <meta name="viewport" content="width=device-width, inition-scale=1, height=device-height">
         
         <title>Visualizer</title>
-        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <!-- <link rel="stylesheet" type="text/css" href="/css/style.css"> -->
+        <link rel="stylesheet" type="text/css" href="/css/my_style.css">
 
     </head>
-    <body>  
-        <!--
-        <h1>Visualization of various algorithms</h1><hr>
-        <div class="dropdown-menu">
-            <form method="POST">
-                Algorithm:<input type="text" name="vorname"><br>
-                Passwort:<input type="password" name="password"><br>
-                <input type="range" name="sorting-speed" min="1" max="10"><br>
+    <body>
 
-                <input type="submit" value="Load Algorithm"><br>
-            </form>
-        </div>
-        -->
-        <div id="sidebar">
+        <div id="my_sidebar">
             <header>
                 <p>Tom Carnein</p>
             </header>
-            <p class="menu_option">Homepage</p><br>
-            <p class="menu_option">My Projects</p><br>
-            <p class="menu_option">Explore</p><br>
-            <p class="menu_option">About</p><br>
-            <p class="menu_option">Contact</p><br>
+            <a class="menu_option">Homepage</a><br>
+            <a class="menu_option">My Projects</a><br>
+            <a class="menu_option">Explore</a><br>
+            <a class="menu_option">About</a><br>
+            <a class="menu_option">Contact</a><br>
         </div>
         
         <div id="playfield">
             
             <div id="playfield_menu">
-                <h1>Algorithm Menu</h1>
-                <hr>
-                <div class="dropdown_menu">
+                
+                <h1 style="margin:7px;padding-bottom:5px;">Algorithm Menu</h1>
+
+                <div class="my_dropdown_menu" onclick="showDropdown(my_menu1_header, my_menu1)">
+                    <p id="my_menu1_header" style="border-top:1px solid black;">
+                        Algorithm Type
+                        <i class="fas fa-angle-left"></i>
+                    </p>
+                    <div class="my_dropdown_options" id="my_menu1" contenteditable="false">
+                        <p>Pathfinding</p>
+                        <p>Sorting</p>
+                    </div>
+                </div>
+
+                <div class="my_dropdown_menu" onclick="showDropdown(my_menu2_header, my_menu2)">
+                    <p id="my_menu2_header">
+                        Choose Algorithm
+                        <i class="fas fa-angle-left"></i>
+                    </p>
+                    <div class="my_dropdown_options" id="my_menu2" contenteditable="false">
+                        <p onclick="selectAlgo(my_menu2_header, this)">Dijkstra</p>
+                    </div>
+                </div>
+
+                <div class="my_dropdown_menu" onclick="showDropdown(my_menu3_header, my_menu3)">
+                    <p id="my_menu3_header">
+                        Choose Speed
+                        <i class="fas fa-angle-left"></i>
+                    </p>
+                    <div class="my_dropdown_options" id="my_menu3" contenteditable="false">
+                        <p id="0.25" onclick="selectAlgoSpeed(my_menu3_header, my_menu3, this)">0.25x</p>
+                        <p id="0.5" onclick="selectAlgoSpeed(my_menu3_header, my_menu3, this)">0.50x</p>
+                        <p id="0.75" onclick="selectAlgoSpeed(my_menu3_header, my_menu3, this)">0.75x</p>
+                        <p id="1.0" onclick="selectAlgoSpeed(my_menu3_header, my_menu3, this)">1.00x</p>
+                    </div>
+                </div>
+
+                <!-- <div class="dropdown_menu">
                     <button id="algo_type" class="drowdown_button">Choose Type</button>
                     <div class="algorithm_menu_options">
                         <a id="Sorting" class="algo_type" onclick="chooseAlgoType(this.id)">Sorting</a>
@@ -83,13 +108,9 @@
                     <button id="reset_algo" onclick="resetAlgo()">Reset</button>
                 </div>
                 <hr>
-
-
-
-
                 <div class="start_reset">
                     <button id="start_algo" onclick="testStart()">Start</button>
-                </div>
+                </div> -->
                 
 
             </div>
@@ -103,6 +124,7 @@
         <script src="../js_files/playfield_main.js"></script>
         <script src="../js_files/pathfinding_algos.js"></script>
         <script src="../js_files/sorting_algos.js"></script>
+        <script src="https://kit.fontawesome.com/01a92479e6.js" crossorigin="anonymous"></script>
 
     </body>
 

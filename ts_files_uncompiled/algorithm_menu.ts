@@ -1,72 +1,55 @@
-// Choose Algorithm functions and important global vars
-var choose_option:any;
-var typeSelected:boolean = false;
 
 function chooseAlgoType(id:string) {
 
-    windowWidth = window.innerWidth;
-    windowHeight = window.innerHeight;
-    typeSelected = true;
-    algoSelected = false;
-    choose_option = document.getElementById("algo_type");
-    choose_option.innerHTML = id;
+    myGlobalVars.windowWidth = window.innerWidth;
+    myGlobalVars.windowHeight = window.innerHeight;
+    myGlobalVars.typeSelected = true;
+    myGlobalVars.algoSelected = false;
+    myGlobalVars.choose_option = document.getElementById("algo_type");
+    myGlobalVars.choose_option.innerHTML = id;
     clearPlayfield();
 
     switch (id) {
 
         case "Sorting":
             resetChooseButton("2")
-            createSortingPlayfield((windowWidth*0.5)/16);
+            createSortingPlayfield((myGlobalVars.windowWidth*0.5)/16);
             break;
 
         case "Pathfinding":
             resetChooseButton("3");
-            createPathfindingPlayfield(0.5*windowWidth, 0.6*windowHeight);
+            createPathfindingPlayfield(0.5*myGlobalVars.windowWidth, 0.6*myGlobalVars.windowHeight);
             break;
     }
 }
 
-// Change displayed Algorithm name depending on type
-var algoSelected:boolean = false;
-var activeAlgo:string | undefined = undefined;
+function selectAlgo(myMenuHeaderX:any, self:any) {
+    myGlobalVars.choose_option = document.getElementsByClassName("choose_algo");
+    myGlobalVars.activeAlgo = self.id;
+    myGlobalVars.algoSelected = true;
 
-function selectAlgo(id:string) {
-    choose_option = document.getElementsByClassName("choose_algo");
-    activeAlgo = id;
-    algoSelected = true;
-
-    for (let i = 0; i < choose_option.length; i++) {
-        choose_option[i].innerHTML = id;
+    for (let i = 0; i < myGlobalVars.choose_option.length; i++) {
+        myGlobalVars.choose_option[i].innerHTML = self.id;
     }
 }
 
-// Choose Algorithm speed functions and Important global vars
-const colorizeDelay:number = 100;
-var speedMultiplier:number;
-var speedSelected:boolean = false;
+function selectAlgoSpeed(myMenuHeaderX:any, myMenuX:any, self:any) {
 
-function selectAlgoSpeed(id:string) {
-    choose_option = document.getElementById("algo_speed");
-    choose_option.innerHTML = `${id}x`;
-    speedMultiplier = 1 - Number(id);
-    speedSelected = true;
+    myGlobalVars.speedMultiplier = 1 - Number(self.id);
+    myGlobalVars.speedSelected = true;    
+    setHeaderName(myMenuHeaderX, self)
 }
 
-// Test if Start can be called
 function testStart() {
 
     // typeSelected is not entirely necessary 
-    if (algoSelected === true && speedSelected === true && typeSelected === true) {
+    if (myGlobalVars.algoSelected === true && myGlobalVars.speedSelected === true && myGlobalVars.typeSelected === true) {
         startAlgo();
 
     } else {
         alert("Please select all options!");
     }
 }
-
-// Start and Reset functions and Important global vars
-var windowHeight:number;
-var windowWidth:number;
 
 function startAlgo() {
 
@@ -75,11 +58,11 @@ function startAlgo() {
 
     playfieldDivs.forEach((node:any) => myArray.push(node));
 
-    switch (activeAlgo) {
+    switch (myGlobalVars.activeAlgo) {
         // Pathfinding options
         case "Dijkstra":
-            if (targetCell !== undefined) {
-                dijkstra(startCell, targetCell, allRows[1].childElementCount);
+            if (myGlobalVars.targetCell !== undefined) {
+                dijkstra(myGlobalVars.startCell, myGlobalVars.targetCell, myGlobalVars.allRows[1].childElementCount);
                 break;
 
             } else {
@@ -100,44 +83,45 @@ function startAlgo() {
 
 function resetAlgo() {
     
-    windowWidth = window.innerWidth;
-    windowHeight = window.innerHeight;
+    myGlobalVars.windowWidth = window.innerWidth;
+    myGlobalVars.windowHeight = window.innerHeight;
 
-    if (myBools.sortingAlgoActive === true) {
-        myBools.sortingAlgoActive = false;
+    if (myGlobalVars.sortingAlgoActive === true) {
+        myGlobalVars.sortingAlgoActive = false;
         clearPlayfield();
-        createSortingPlayfield(windowWidth*0.5/16);
+        createSortingPlayfield(myGlobalVars.windowWidth*0.5/16);
 
-    } else if (myBools.pathfindingAlgoActive === true) {
-        targetFound = false;
-        targetCell = undefined;
-        allCells = undefined;
-        allNodes = new Array<myNode>();
-        myBools.pathfindingAlgoActive = false;
+    } else if (myGlobalVars.pathfindingAlgoActive === true) {
+        myGlobalVars.targetFound = false;
+        myGlobalVars.targetCell = undefined;
+        myGlobalVars.allCells = undefined;
+        myGlobalVars.allNodes = new Array<myNode>();
+        myGlobalVars.pathfindingAlgoActive = false;
         clearPlayfield();
-        createPathfindingPlayfield(0.5*windowWidth, 0.6*windowHeight);
+        createPathfindingPlayfield(0.5*myGlobalVars.windowWidth, 0.6*myGlobalVars.windowHeight);
     }
 }
 
-// Set start for Pathfinding Algorithm and Important global vars
-var targetCell:any = undefined;
-var runningAlgo:boolean = false;
-
 function chooseTargetCell(id:number) {
 
-    if (runningAlgo === false) {
+    if (myGlobalVars.runningAlgo === false) {
 
-        if (targetCell !== undefined) {
-            targetCell.setAttribute("style", "background-color:white;");
-            targetCell = document.getElementById(String(id));
-            targetCell.setAttribute("style", "background-color:#2E9CCA;");
+        if (myGlobalVars.targetCell !== undefined) {
+            myGlobalVars.targetCell.setAttribute("style", "background-color:white;");
+            myGlobalVars.targetCell = document.getElementById(String(id));
+            myGlobalVars.targetCell.setAttribute("style", "background-color:#2E9CCA;");
 
         } else {
-            targetCell = document.getElementById(String(id));
-            targetCell.setAttribute("style", "background-color:#2E9CCA;");
+            myGlobalVars.targetCell = document.getElementById(String(id));
+            myGlobalVars.targetCell.setAttribute("style", "background-color:#2E9CCA;");
         }
 
     } else {
         alert("You currently cant select a new start\n Please wait or press the 'Reset Algorithm' button.")
     }
+}
+
+function setHeaderName(myMenuHeaderX:any, self:any) {
+
+    myMenuHeaderX.innerHTML = self.innerHTML + "<i class='fas fa-angle-left'></i>";
 }
