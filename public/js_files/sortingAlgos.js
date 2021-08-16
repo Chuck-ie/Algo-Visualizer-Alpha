@@ -1,6 +1,6 @@
 "use strict";
 var sortingRelated = {
-    allArrays: new Array(),
+    allSortElements: new Array(),
 };
 function selectionSort(myArray, currNode, i = 0, j = 1, bestNode = currNode, bestIndex = i) {
     let comparisonNode = myArray[j];

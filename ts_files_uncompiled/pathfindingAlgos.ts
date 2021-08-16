@@ -8,12 +8,12 @@ interface myNode {
 
 var pathingRelated:any = {
 
+    startCell: undefined,
     allNodes: new Array<myNode>(),
     visitedNodes: new Array<myNode>(),
     startNode: {actualCell:undefined, predecessorNode:undefined, shortestPath:0},
     targetCell: undefined,
     targetFound: false,
-    startCell: undefined,
     targetID: undefined,
 }
 

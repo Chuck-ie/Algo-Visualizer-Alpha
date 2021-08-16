@@ -1,5 +1,5 @@
 var sortingRelated:any = {
-    allArrays: new Array<any>(),
+    allSortElements: new Array<any>(),
 }
 
 function selectionSort(myArray:any, currNode:any, i=0, j=1, bestNode=currNode, bestIndex=i) {

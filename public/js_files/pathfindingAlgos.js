@@ -1,11 +1,11 @@
 "use strict";
 var pathingRelated = {
+    startCell: undefined,
     allNodes: new Array(),
     visitedNodes: new Array(),
     startNode: { actualCell: undefined, predecessorNode: undefined, shortestPath: 0 },
     targetCell: undefined,
     targetFound: false,
-    startCell: undefined,
     targetID: undefined,
 };
 function newDijkstra(startCell, targetCell, rowSize) {

@@ -1,17 +1,11 @@
 
-var windowRelated:any = {
-
-    waitingForDelay: false,
-}
-
 var playfield:any = {
 
     playfieldContainer: document.getElementById("playfield_container"),
-    allRows: document.getElementsByClassName("gridRows"),
-    emptyActive: true,
+    allRows: document.getElementsByClassName("row"),
+    emptyActive: false,
     sortingActive: false,
     pathingActive: false,
-    runningAlgo: false,
 }
 
 window.onload = doOnLoad;
@@ -30,6 +24,9 @@ function doOnLoad() {
 
 function doOnResize() {
 
+    let test:any = document.getElementById("playfield_container");
+    console.log(test.style.minHeight);
+
     let windowSize:any = getWindowSize();
     clearPlayfield();
 
@@ -40,107 +37,92 @@ function doOnResize() {
         createSortingPlayfield((windowSize[1] * 0.5) / 16);
 
     } else if (playfield.pathingActive === true) {
-        createPathfindingPlayfield(windowSize[0] * 0.6, windowSize[1] * 0.5);
+        createPathingPlayfield(windowSize[0] * 0.6, windowSize[1] * 0.5);
 
     }
 }
 
 function clearPlayfield() {
 
-    if (playfield.emptyPlayfieldActive === true) {
-        let empty:any = document.getElementById("empty_playfield");
-        playfield.emptyPlayfieldActive = false;
-        empty.remove();
-    }
-
-    sortingRelated.allArrays = [];
-
-    for (let i = playfield.playfieldContainer.childNodes.length - 1; i >= 0; i--) {
+    for (let i = playfield.playfield_container.childNodes.length - 1; i >= 0; i--) {
         playfield.playfieldContainer.childNodes[i].remove();
     }
 }
 
-function createPathfindingPlayfield(height:number, width:number) {
+function createPathingPlayfield(height:number, width:number) {
 
-    playfield.pathfindingAlgoActive = true;
-    playfield.sortingAlgoActive = false;
+    // active playfield = true, else = false
+    playfield.pathingActive = true;
+    playfield.sortingActive = false;
+    playfield.emptyActive = false;
 
     let rowCount:number = Math.floor(height/22);
     let cellCount:number = Math.floor(width/24);
 
+    // add rows to playfield container depending on the current window size
     for (let i = 0; i < rowCount; i++) {
-        let newRow = document.createElement("div");
-        playfield.playfieldContainer!.appendChild(newRow).className = "gridRows";
+        let newRow:any = document.createElement("div");
+        playfield.playfieldContainer!.appendChild(newRow).className = "row";
     }
 
+    // add cells to each row element
     for (let j = 0; j < rowCount; j++) {
         for (let k = 0; k < cellCount; k++) {
-            let newCell = document.createElement("div");
-            newCell.setAttribute("id", `${(j*cellCount)+k}`);
-            newCell.setAttribute("onclick", "chooseTargetCell(this.id)");
+            let newCell:any = document.createElement("div");
+            newCell.id = `${(j * cellCount) + k}`;
+            newCell.onclick = "setTargetCell(this.id)";
 
-            if (j == Math.floor(rowCount/2) && k == Math.floor(cellCount/2)) {
-                newCell.setAttribute("style", "background-color:#2E9CCA;")
+            if (j == Math.floor(rowCount / 2) && k == Math.floor(cellCount / 2)) {
+                newCell.style.backgroundColor = "#FC4445";
                 pathingRelated.startCell = newCell;
             }
 
-            playfield.allRows[j].appendChild(newCell).className = "gridCells";
+            playfield.allRows[j].appendChild(newCell).className = "cell";
         }
     }
 }
 
 function createSortingPlayfield(width:number) {
 
-    let size:number = Math.floor(width);
-    playfield.sortingAlgoActive = true;
-    playfield.pathfindingAlgoActive = false;
+    // active playfield = true, else = false
+    playfield.pathingActive = false;
+    playfield.sortingActive = true;
+    playfield.emptyActive = false;
 
-    for (let i = 0; i < size; i++) {
-        let newArray:any = document.createElement("div");
-        let arrayHeight:number = (i*10) + 10;
-        newArray.setAttribute("class", "sortingArray");
-        newArray.setAttribute("style", `min-width:10px;min-height:${arrayHeight}px;background-color:white;margin-right: 2px;border: 1px solid gray;position: relative;display:inline-block;`);
-        newArray.setAttribute("id", i);
-        sortingRelated.allArrays.push(newArray);
+    let elementCount:number = Math.floor(width);
+
+    // create divs elements for playfield to be sorted
+    for (let i = 0; i < elementCount; i++) {
+        let newElement:any = document.createElement("div");
+        let elementHeight:number = (i * 10) + 10;
+        newElement.id = `${i}`;
+        newElement.className = "sortingElement";
+        newElement.setAttribute("style", `min-width:10px;min-height:${elementHeight}px;margin-right:2px;border:1px solid gray;position:relative;display:inline-block;`);
+        sortingRelated.allSortElements.push(newElement);
     }
 
-    for (let j = sortingRelated.allArrays.length; j > 0; j --) {
-        let randomID:number = Math.floor(Math.random() * j);
-        let newArray:any = sortingRelated.allArrays[randomID];
-        let toBeRemoved:number = sortingRelated.allArrays.indexOf(newArray);
-        sortingRelated.allArrays.splice(toBeRemoved, 1);
-        playfield.playfieldContainer.appendChild(newArray);
+    // randomize element order
+    for (let j = elementCount; j > 0; j--) {
+        let randomIndex:number = Math.floor(Math.random() * j);
+        let randomElement:any = sortingRelated.allSortElements[randomIndex]
+
+        sortingRelated.allSortElements.splice(randomIndex, 1);
+        playfield.playfieldContainer.appendChild(randomElement);
     }
 }
 
 function createEmptyPlayfield(height:number, width:number) {
 
-    let emptyPlayfield:any = document.createElement("div");
-    emptyPlayfield.setAttribute("id", "empty_playfield")
-    emptyPlayfield.setAttribute("style", `border-radius:0px 10px 10px 0px;color:black;min-height:${0.7*height}px;min-width:${0.5*width}px;background-color:white;text-align:center;font-size:22px;`);
-    emptyPlayfield.innerHTML = "Select Algorithm Type!";
-    playfield.playfieldContainer.appendChild(emptyPlayfield);
-    playfield.emptyPlayfieldActive = true;
-}
+    // active playfield = true, else = false
+    playfield.pathingActive = false;
+    playfield.sortingActive = false;
+    playfield.emptyActive = true;
 
-function resetChooseButton(id:string) {
-
-    let algo_option = document.getElementsByClassName("choose_algo");
-    let currMenu:any;
-
-    for (let i = 0; i < algo_option.length; i++) {
-        algo_option[i].innerHTML = "Choose Algorithm";
-    }
-
-    for (let j = 1; j <= 3; j++) {
-        if (String(j) == id) {
-            currMenu = document.getElementById("menu" + id);
-            currMenu.setAttribute("style", "display:inline-block;");
-        } else {
-            currMenu = document.getElementById("menu" + String(j));
-            currMenu.setAttribute("style", "display:none;");
-        }
-    }
+    // create empty playfield
+    let emptyElement:any = document.createElement("div");
+    emptyElement.setAttribute("style", `border-radius:0px 10px 10px 0px;color:black;min-height:${0.7*height}px;min-width:${0.5*width}px;background-color:white;text-align:center;font-size:22px;`);
+    emptyElement.innerHTML = "Select Algorithm Type first!";
+    playfield.playfieldContainer.appendChild(emptyElement);
 }
 
 function showDropdown(myMenuHeaderX:any, myMenuX:any) {

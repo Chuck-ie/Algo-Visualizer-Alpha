@@ -45,7 +45,6 @@ body {
     min-width: 220px;
     user-select: none;
     border-radius: 10px 0px 0px 10px;  /* top-left, top-right, bottom-right, bottom-left*/
-    min-height: 562px;
 }
 
 #playfield_menu h1 {
@@ -115,4 +114,9 @@ body {
     background-color: #4056A1;
     filter: brightness(1.2) !important;
 }
+
+
+
+/* pathing playfield related */
+
 

@@ -4,6 +4,7 @@ var playfieldMenu:any = {
     typeSelected: false,
     algoSelected: false,
     speedSelected: false,
+    runningAlgo: false,
     speedMultiplier: undefined,
     activeAlgoNameName: undefined,
     choose_option: undefined,
@@ -26,7 +27,7 @@ function ChooseAlgoType(myMenuHeaderX:any, self:any) {
             break;
 
         case "Pathfinding":
-            createPathfindingPlayfield(windowSize[0] * 0.6, windowSize[1] * 0.5);
+            createPathingPlayfield(windowSize[0] * 0.6, windowSize[1] * 0.5);
             break;
     }
 }
@@ -125,13 +126,12 @@ function StartResetGlow(self:any) {
 
 function resetAlgo() {
     
-    windowRelated.windowWidth = window.innerWidth;
-    windowRelated.windowHeight = window.innerHeight;
+    let windowSize:any = getWindowSize();
 
     if (playfield.sortingAlgoActive === true) {
         playfield.sortingAlgoActive = false;
         clearPlayfield();
-        createSortingPlayfield(windowRelated.windowWidth*0.5/16);
+        createSortingPlayfield((windowSize[1] * 0.5) / 16);
 
     } else if (playfield.pathfindingAlgoActive === true) {
         pathingRelated.targetFound = false;
@@ -140,7 +140,7 @@ function resetAlgo() {
         pathingRelated.allNodes = new Array<myNode>();
         playfield.pathfindingAlgoActive = false;
         clearPlayfield();
-        createPathfindingPlayfield(0.5*windowRelated.windowWidth, 0.6*windowRelated.windowHeight);
+        createPathingPlayfield(windowSize[0] * 0.6, windowSize[1] * 0.5);
     }
 }
 
