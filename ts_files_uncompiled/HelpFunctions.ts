@@ -63,10 +63,24 @@ function showDropdown(myMenuHeaderX:any, myMenuX:any) {
     }
 }
 
+function setHeaderName(myMenuHeaderX:any, self:any) {
+
+    myMenuHeaderX.innerHTML = self.innerHTML + "<i class='fas fa-angle-left'></i>";
+}
+
 function setMenuHeight() {
 
     let newHeight:number = playfield.playfieldContainer.clientHeight;
     let menuElement:any = document.getElementById("playfield_menu");
     menuElement.style.minHeight = `${newHeight}px`;
+}
 
+function StartResetGlow(self:any) {
+
+    self.style.backgroundColor = "#14A76C";
+    self.style.filter = "brightness(1.2)";
+    setTimeout(() => {
+        self.style.backgroundColor = "#4056A1";
+        self.style.filter = "brightness(1.0)";
+    }, 1000);
 }

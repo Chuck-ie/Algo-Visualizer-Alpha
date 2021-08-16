@@ -46,8 +46,19 @@ function showDropdown(myMenuHeaderX, myMenuX) {
         myMenuHeaderX.style.filter = "brightness(1.2)";
     }
 }
+function setHeaderName(myMenuHeaderX, self) {
+    myMenuHeaderX.innerHTML = self.innerHTML + "<i class='fas fa-angle-left'></i>";
+}
 function setMenuHeight() {
     let newHeight = playfield.playfieldContainer.clientHeight;
     let menuElement = document.getElementById("playfield_menu");
     menuElement.style.minHeight = `${newHeight}px`;
+}
+function StartResetGlow(self) {
+    self.style.backgroundColor = "#14A76C";
+    self.style.filter = "brightness(1.2)";
+    setTimeout(() => {
+        self.style.backgroundColor = "#4056A1";
+        self.style.filter = "brightness(1.0)";
+    }, 1000);
 }

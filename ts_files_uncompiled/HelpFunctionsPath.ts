@@ -1,4 +1,24 @@
 
+function setTargetCell(id:string) {
+
+    if (playfield.algoInProgress === false) {
+
+        if (pathingRelated.targetCell !== undefined) {
+            pathingRelated.targetCell.style.backgroundColor = "white";
+            pathingRelated.targetCell = document.getElementById(id);
+            pathingRelated.targetCell.style.backgroundColor = "#14A76C";
+
+        } else {
+            pathingRelated.targetCell = document.getElementById(id);
+            pathingRelated.targetCell.style.backgroundColor = "#14A76C";
+
+        }
+
+    } else {
+        alert("You currently cant select a new start\n Please wait or press the 'Reset Algorithm' button.");
+    }
+}
+
 function checkNeighbours(currNode:myNode, neighboursArr:any) {
 
     let allCells:any = document.getElementsByClassName("gridCells");

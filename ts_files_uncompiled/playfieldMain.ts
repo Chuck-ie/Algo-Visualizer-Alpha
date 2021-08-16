@@ -41,6 +41,7 @@ function createPathingPlayfield(height:number, width:number) {
 
             if (j == Math.floor(rowCount / 2) && k == Math.floor(cellCount / 2)) {
                 newCell.style.backgroundColor = "#FC4445";
+                newCell.style.filter = "brigthness(0.8)";
                 pathingRelated.startCell = newCell;
             }
 

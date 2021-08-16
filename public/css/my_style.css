@@ -130,3 +130,18 @@ body {
     position:relative;
     display:inline-block;
 }
+
+.cell {
+    position: relative;
+    background-color: white;
+    border:1px solid gray;
+    min-width: 20px;
+    min-height: 20px;
+    display: inline-block;
+    margin-right: 2px;
+}
+
+.cell:hover {
+    background-color: #FC4445;
+    filter: brightness(0.8);
+}

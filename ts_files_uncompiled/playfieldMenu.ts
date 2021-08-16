@@ -4,9 +4,9 @@ var playfieldMenu:any = {
     typeSelected: false,
     algoSelected: false,
     speedSelected: false,
-    runningAlgo: false,
+    algoInProgress: false,
     speedMultiplier: undefined,
-    activeAlgoNameName: undefined,
+    activeAlgoName: undefined,
     choose_option: undefined,
     colorizeDelay: 100,
 }
@@ -112,18 +112,6 @@ function newResetPlayfield(self:any) {
 
 }
 
-function StartResetGlow(self:any) {
-
-    self.style.backgroundColor = "#14A76C";
-    self.style.filter = "brightness(1.2)";
-    setTimeout(() => {
-        self.style.backgroundColor = "#4056A1";
-        self.style.filter = "brightness(1.0)";
-    }, 1000);
-}
-
-
-
 function resetAlgo() {
     
     let windowSize:any = getWindowSize();
@@ -144,26 +132,4 @@ function resetAlgo() {
     }
 }
 
-function chooseTargetCell(id:number) {
 
-    if (playfield.runningAlgo === false) {
-
-        if (pathingRelated.targetCell !== undefined) {
-            pathingRelated.targetCell.setAttribute("style", "background-color:white;");
-            pathingRelated.targetCell = document.getElementById(String(id));
-            pathingRelated.targetCell.setAttribute("style", "background-color:#2E9CCA;");
-
-        } else {
-            pathingRelated.targetCell = document.getElementById(String(id));
-            pathingRelated.targetCell.setAttribute("style", "background-color:#2E9CCA;");
-        }
-
-    } else {
-        alert("You currently cant select a new start\n Please wait or press the 'Reset Algorithm' button.")
-    }
-}
-
-function setHeaderName(myMenuHeaderX:any, self:any) {
-
-    myMenuHeaderX.innerHTML = self.innerHTML + "<i class='fas fa-angle-left'></i>";
-}

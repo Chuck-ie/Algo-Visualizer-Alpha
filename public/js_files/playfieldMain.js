@@ -32,6 +32,7 @@ function createPathingPlayfield(height, width) {
             newCell.onclick = "setTargetCell(this.id)";
             if (j == Math.floor(rowCount / 2) && k == Math.floor(cellCount / 2)) {
                 newCell.style.backgroundColor = "#FC4445";
+                newCell.style.filter = "brigthness(0.8)";
                 pathingRelated.startCell = newCell;
             }
             playfield.allRows[j].appendChild(newCell).className = "cell";
