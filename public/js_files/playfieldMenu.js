@@ -48,10 +48,10 @@ function resetAlgo() {
         createSortingPlayfield((windowSize[1] * 0.5) / 16);
     }
     else if (playfield.pathfindingAlgoActive === true) {
-        pathingRelated.targetFound = false;
-        pathingRelated.targetCell = undefined;
-        pathingRelated.allCells = undefined;
-        pathingRelated.allNodes = new Array();
+        pathing.targetFound = false;
+        pathing.targetCell = undefined;
+        pathing.allCells = undefined;
+        pathing.allNodes = new Array();
         playfield.pathfindingAlgoActive = false;
         clearPlayfield();
         createPathingPlayfield(windowSize[0] * 0.6, windowSize[1] * 0.5);
@@ -90,7 +90,8 @@ function startAlgo() {
     else {
         switch (playfieldMenu.activeAlgoName) {
             case "Dijkstra":
-                if (pathingRelated.targetCell !== undefined) {
+                if (pathing.targetCell !== undefined) {
+                    dijkstra(pathing.startCell, pathing.targetCell, 32);
                     break;
                 }
                 else {

@@ -8,10 +8,15 @@
 //     targetFound: false,
 //     targetID: undefined,
 // }
-var pathingRelated = {
+var pathing = {
     startCell: undefined,
     targetCell: undefined,
     nextNodes: new Array(),
 };
 function dijkstra(startCell, targetCell, rowSize) {
+    let neighboursArray = [1, -1, rowSize, -rowSize];
+    let startNode = { actualCell: startCell, predecessorNode: undefined, shortestPath: 0 };
+    startNode.predecessorNode = startNode;
+}
+function dijkstraLoop() {
 }

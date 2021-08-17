@@ -1,7 +1,7 @@
 
 interface myNode {
     
-    actualCell: any;
+    actualCell: HTMLElement;
     predecessorNode: myNode | undefined;
     shortestPath: number;
 }
@@ -17,18 +17,30 @@ interface myNode {
 //     targetID: undefined,
 // }
 
-var pathingRelated:any = {
+var pathing:any = {
     startCell: undefined,
     targetCell: undefined,
     nextNodes: new Array<myNode>(),
-    
+
 
 }
 
 
-function dijkstra(startCell:any, targetCell:any, rowSize:number) {
+function dijkstra(startCell:HTMLElement, targetCell:any, rowSize:number) {
+
+    let neighboursArray:any = [1, -1, rowSize, -rowSize];
+    let startNode:myNode = {actualCell: startCell, predecessorNode: undefined , shortestPath:0}
+    startNode.predecessorNode = startNode;
 
     
+
+
+
+}
+
+function dijkstraLoop() {
+
+
 
 
 }
