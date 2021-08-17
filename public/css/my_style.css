@@ -1,12 +1,27 @@
 /* main body changes */
+:root {
+    --main-bg-color: #4056A1;
+}
+
+@keyframes myCellFadeIn {
+    0% {background-color: hsl(0, 0%, 100%);}
+    33% {background-color: hsl(224, 96%, 80%);}
+    66% {background-color: hsl(226, 95%, 71%);}
+    100% {background-color: hsl(224, 83%, 61%);}
+    from {border-radius: 0px;}
+    to {border-radius: 15px;}
+}
+
+@keyframes shortestPath {
+    0% {background-color: hsl(0, 0%, 100%);}
+    50% {background-color: hsl(59, 90%, 80%);}
+    100% {background-color: hsl(59, 78%, 57%);}
+}
+
 body {
     font-family: 'Segoe UI';
     background-color: #DEF2F1;
     color: #FFFFFF;
-}
-
-:root {
-    --main-bg-color: #4056A1;
 }
 
 #my_sidebar {
@@ -41,7 +56,6 @@ body {
     width: 17vw; 
     max-width: 350px;
     min-width: 220px;
-    user-select: none;
     border-radius: 10px 0px 0px 10px;  /* top-left, top-right, bottom-right, bottom-left*/
 }
 
@@ -70,7 +84,6 @@ body {
 }
 
 .my_dropdown_menu {
-    user-select: none;
     text-align: center;
     font-size: 20px;
     background-color: #4056A1;
@@ -81,11 +94,13 @@ body {
     padding: 7px;
     margin: 0px;
     border-bottom: 1px solid black;
+    user-select: none;
 }
 
 .my_dropdown_menu p:hover {
     background-color: #4056A1;
     filter: brightness(1.2) !important;
+    user-select: none;
 }
 
 .my_dropdown_options {
@@ -93,20 +108,22 @@ body {
     background-color: #4056A1;
 }
 
+.my_dropdown_options p {
+    user-select: none;
+}
+
 .my_start_reset {
     background-color: #4056A1;
     text-align: center;
     font-size: 20px;
-    user-select: none;
     cursor: pointer;
-
 }
 
 .my_start_reset p {
     padding: 7px;
     margin: 0px;
     border-bottom: 1px solid black;
-
+    user-select: none;
 }
 
 .my_start_reset:hover {

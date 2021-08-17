@@ -9,11 +9,11 @@ var playfieldMenu:any = {
     colorizeDelay: 100,
 }
 
-function chooseAlgoType(myMenuHeaderX:any, self:any, standardElement:any, pathingElement:any, sortingElement:any) {
+function chooseAlgoType(myMenuHeaderX:HTMLElement, self:HTMLElement, standardElement:HTMLElement, pathingElement:HTMLElement, sortingElement:HTMLElement) {
 
     setHeaderName(myMenuHeaderX, self);
-    let windowSize:any = getWindowSize();
-    let myElements:any = [standardElement, pathingElement, sortingElement];
+    let windowSize:number[] = getWindowSize();
+    let myElements:HTMLElement[] = [standardElement, pathingElement, sortingElement];
     playfieldMenu.activeAlgoName = self.innerHTML;
     playfieldMenu.typeSelected = true;
     playfieldMenu.algoSelected = false;
@@ -39,14 +39,14 @@ function chooseAlgoType(myMenuHeaderX:any, self:any, standardElement:any, pathin
     }
 }
 
-function selectAlgoSpeed(myMenuHeaderX:any, myMenuX:any, self:any) {
+function selectAlgoSpeed(myMenuHeaderX:HTMLElement, myMenuX:HTMLElement, self:HTMLElement) {
 
     playfieldMenu.speedMultiplier = 1 - Number(self.id);
     playfieldMenu.speedSelected = true;    
     setHeaderName(myMenuHeaderX, self);
 }
 
-function selectAlgo(myMenuHeaderX:any, self:any) {
+function selectAlgo(myMenuHeaderX:HTMLElement, self:HTMLElement) {
 
     playfieldMenu.activeAlgoName = self.innerHTML;
     playfieldMenu.algoSelected = true;
@@ -55,14 +55,16 @@ function selectAlgo(myMenuHeaderX:any, self:any) {
 
 function resetAlgo() {
     
-    let windowSize:any = getWindowSize();
+    let windowSize:number[] = getWindowSize();
 
     if (playfield.sortingAlgoActive === true) {
+
         playfield.sortingAlgoActive = false;
         clearPlayfield();
         createSortingPlayfield((windowSize[1] * 0.5) / 16);
 
     } else if (playfield.pathfindingAlgoActive === true) {
+
         pathing.targetFound = false;
         pathing.targetCell = undefined;
         pathing.allCells = undefined;
@@ -73,7 +75,7 @@ function resetAlgo() {
     }
 }
 
-function newResetPlayfield(self:any) {
+function newResetPlayfield(self:HTMLElement) {
 
     startResetGlow(self);
     
@@ -82,16 +84,18 @@ function newResetPlayfield(self:any) {
 }
 
 
-function testStart(self:any) {
+function testStart(self:HTMLElement) {
 
     startResetGlow(self);
     
-    if (playfieldMenu.algoSelected === true && playfieldMenu.speedSelected === true && playfieldMenu.typeSelected === true) {
-        startAlgo();
+    (playfieldMenu.algoSelected === true && playfieldMenu.speedSelected === true && playfieldMenu.typeSelected === true) ? startAlgo() : alert("Please select all options!");
 
-    } else {
-        alert("Please select all options!");
-    }
+    // if (playfieldMenu.algoSelected === true && playfieldMenu.speedSelected === true && playfieldMenu.typeSelected === true) {
+    //     startAlgo();
+
+    // } else {
+    //     alert("Please select all options!");
+    // }
 }
 
 function startAlgo() {
@@ -99,12 +103,16 @@ function startAlgo() {
     // case sorting algo selected
     if (playfieldMenu.activeAlgoName.slice(-4) === "Sort") {
 
-        let sortingElements:any = playfield.playfieldContainer.children;
-        let elementsAsArray:any = [];
-        for (let i = 0; i < sortingElements.length; i++) {
-            elementsAsArray.push(sortingElements[i]);
-        }
+        let sortingElements:HTMLElement[] = playfield.playfieldContainer.children;
+        let elementsAsArray = new Array<HTMLElement>();
 
+        sortingElements.forEach((element:HTMLElement) => {
+            elementsAsArray.push(element)
+        })
+
+        // for (let i = 0; i < sortingElements.length; i++) {
+        //     elementsAsArray.push(sortingElements[i]);
+        // }
 
         switch(playfieldMenu.activeAlgoName) {
             
@@ -123,7 +131,7 @@ function startAlgo() {
 
             case "Dijkstra":
                 if (pathing.targetCell !== undefined) {
-                    dijkstra(pathing.startCell, pathing.targetCell, 32);
+                    prepareDijkstra(pathing.startCell, pathing.targetCell, pathing.allRows[0].childElementCount);
                     break;
     
                 } else {

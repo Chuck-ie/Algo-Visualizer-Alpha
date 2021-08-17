@@ -1,4 +1,27 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+function delayColors(currentNode, i) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield setTimeout(() => {
+            colorizeNode(currentNode);
+        }, i * 10);
+    });
+}
+function waitForColors(currentNode, i) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield setTimeout(() => {
+            markShortestPath(currentNode);
+        }, i * 10);
+    });
+}
 function setTargetCell(id) {
     if (playfield.algoInProgress === false) {
         if (pathing.targetCell !== undefined) {
@@ -15,56 +38,20 @@ function setTargetCell(id) {
         alert("You currently cant select a new start\n Please wait or press the 'Reset Algorithm' button.");
     }
 }
-// function checkNeighbours(currNode:myNode, neighboursArr:any) {
-//     let allCells:any = document.getElementsByClassName("gridCells");
-//     if (neighboursArr.length === 0) {
-//         return;
-//     }
-//     let validNeighbour:myNode = {actualCell:undefined, predecessorNode:currNode, shortestPath:Infinity};
-//     let currID:number = Number(currNode.actualCell.id);
-//     let notValid:any = pathing.allNodes.map((node:myNode) => {
-//         return Number(node.actualCell.id);
-//     })
-//     if (currID + neighboursArr[0] >= 0 && currID + neighboursArr[0] < allCells.length) {
-//         if (notValid.includes(currID + neighboursArr[0])) {
-//             checkNeighbours(currNode, neighboursArr.slice(1));
-//         } else {
-//             validNeighbour.actualCell = allCells[currID + neighboursArr[0]];
-//             validNeighbour.shortestPath = currNode.shortestPath + 1;
-//             pathing.allNodes.push(validNeighbour);
-//             checkNeighbours(currNode, neighboursArr.slice(1));
-//         }
-//     }
-// }
-function colorizeNode(currNode) {
-    currNode.actualCell.setAttribute("style", "background-color:#FFE400;");
-    setTimeout(() => {
-        currNode.actualCell.setAttribute("style", "background-color:#FC4445;");
-    }, playfieldMenu.colorizeDelay * playfieldMenu.speedMultiplier);
+function colorizeNode(currentNode) {
+    currentNode.actualCell.style.borderRadius = "15px";
+    currentNode.actualCell.style.backgroundColor = "hsl(224, 83%, 61%)";
+    currentNode.actualCell.style.animationName = "myCellFadeIn";
+    currentNode.actualCell.style.animationDuration = "2s";
 }
-function markShortestPath(currNode) {
-    if (currNode == undefined) {
-        return;
-    }
-    if (currNode.predecessorNode != currNode) {
-        currNode.actualCell.setAttribute("style", "background-color:#86C232;");
+function markShortestPath(currentNode) {
+    currentNode.actualCell.style.backgroundColor = "hsl(59, 78%, 57%)";
+    currentNode.actualCell.style.animationName = "shortestPath";
+    currentNode.actualCell.style.animationDuration = "2s";
+    let nextNode = currentNode.predecessorNode;
+    if (nextNode !== undefined) {
         setTimeout(() => {
-            markShortestPath(currNode.predecessorNode);
-        }, playfieldMenu.colorizeDelay * playfieldMenu.speedMultiplier);
-    }
-    else {
-        currNode.actualCell.setAttribute("style", "background-color:#86C232;");
+            markShortestPath(nextNode);
+        }, 100);
     }
 }
-// function getNextNode(currNode:myNode) {
-//     let next:myNode = {actualCell:undefined, predecessorNode:undefined, shortestPath:Infinity};
-//     let validNextNodes = pathing.allNodes.filter((node:myNode) => {
-//         return !pathing.visitedNodes.includes(node);
-//     })
-//     for (let i = 0; i < validNextNodes.length; i++) {
-//         if (validNextNodes[i].shortestPath < next.shortestPath) {
-//             next = validNextNodes[i];
-//         }
-//     }
-//     return next;
-// }

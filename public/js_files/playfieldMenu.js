@@ -62,21 +62,24 @@ function newResetPlayfield(self) {
 }
 function testStart(self) {
     startResetGlow(self);
-    if (playfieldMenu.algoSelected === true && playfieldMenu.speedSelected === true && playfieldMenu.typeSelected === true) {
-        startAlgo();
-    }
-    else {
-        alert("Please select all options!");
-    }
+    (playfieldMenu.algoSelected === true && playfieldMenu.speedSelected === true && playfieldMenu.typeSelected === true) ? startAlgo() : alert("Please select all options!");
+    // if (playfieldMenu.algoSelected === true && playfieldMenu.speedSelected === true && playfieldMenu.typeSelected === true) {
+    //     startAlgo();
+    // } else {
+    //     alert("Please select all options!");
+    // }
 }
 function startAlgo() {
     // case sorting algo selected
     if (playfieldMenu.activeAlgoName.slice(-4) === "Sort") {
         let sortingElements = playfield.playfieldContainer.children;
-        let elementsAsArray = [];
-        for (let i = 0; i < sortingElements.length; i++) {
-            elementsAsArray.push(sortingElements[i]);
-        }
+        let elementsAsArray = new Array();
+        sortingElements.forEach((element) => {
+            elementsAsArray.push(element);
+        });
+        // for (let i = 0; i < sortingElements.length; i++) {
+        //     elementsAsArray.push(sortingElements[i]);
+        // }
         switch (playfieldMenu.activeAlgoName) {
             case "Selection Sort":
                 selectionSort(elementsAsArray, elementsAsArray[0]);
@@ -91,7 +94,7 @@ function startAlgo() {
         switch (playfieldMenu.activeAlgoName) {
             case "Dijkstra":
                 if (pathing.targetCell !== undefined) {
-                    dijkstra(pathing.startCell, pathing.targetCell, 32);
+                    prepareDijkstra(pathing.startCell, pathing.targetCell, pathing.allRows[0].childElementCount);
                     break;
                 }
                 else {

@@ -9,13 +9,13 @@ function getWindowSize() {
 
 function doOnLoad() {
 
-    let windowSize:any = getWindowSize();
+    let windowSize:number[] = getWindowSize();
     createEmptyPlayfield(windowSize[0], windowSize[1]);
 }
 
 function doOnResize() {
 
-    let windowSize:any = getWindowSize();
+    let windowSize:number[] = getWindowSize();
 
     if (playfield.isResizing === false) {
 
@@ -39,7 +39,7 @@ function doOnResize() {
 }
 
 // changes appearance of dropdown menu points
-function showDropdown(myMenuHeaderX:any, myMenuX:any) {
+function showDropdown(myMenuHeaderX:HTMLElement, myMenuX:HTMLElement) {
 
     if (myMenuX.contentEditable === "true") {
 
@@ -63,7 +63,7 @@ function showDropdown(myMenuHeaderX:any, myMenuX:any) {
     }
 }
 
-function setHeaderName(myMenuHeaderX:any, self:any) {
+function setHeaderName(myMenuHeaderX:HTMLElement, self:HTMLElement) {
 
     myMenuHeaderX.innerHTML = self.innerHTML + "<i class='fas fa-angle-left'></i>";
 }
@@ -71,11 +71,11 @@ function setHeaderName(myMenuHeaderX:any, self:any) {
 function setMenuHeight() {
 
     let newHeight:number = playfield.playfieldContainer.clientHeight;
-    let menuElement:any = document.getElementById("playfield_menu");
+    let menuElement:HTMLElement = document.getElementById("playfield_menu")!;
     menuElement.style.minHeight = `${newHeight}px`;
 }
 
-function startResetGlow(self:any) {
+function startResetGlow(self:HTMLElement) {
 
     self.style.backgroundColor = "#14A76C";
     self.style.filter = "brightness(1.2)";

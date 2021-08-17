@@ -1,4 +1,16 @@
 
+async function delayColors(currentNode:myNode, i:number) {
+    await setTimeout(() => {
+        colorizeNode(currentNode)
+    }, i * 10)
+}
+
+async function waitForColors(currentNode:myNode, i:number) {
+    await setTimeout(() => {
+        markShortestPath(currentNode);
+    }, i * 10)
+}
+
 function setTargetCell(id:string) {
 
     if (playfield.algoInProgress === false) {
@@ -19,71 +31,27 @@ function setTargetCell(id:string) {
     }
 }
 
-// function checkNeighbours(currNode:myNode, neighboursArr:any) {
+function colorizeNode(currentNode:myNode) {
 
-//     let allCells:any = document.getElementsByClassName("gridCells");
-
-//     if (neighboursArr.length === 0) {
-//         return;
-//     }
-
-//     let validNeighbour:myNode = {actualCell:undefined, predecessorNode:currNode, shortestPath:Infinity};
-//     let currID:number = Number(currNode.actualCell.id);
-//     let notValid:any = pathing.allNodes.map((node:myNode) => {
-//         return Number(node.actualCell.id);
-//     })
-
-//     if (currID + neighboursArr[0] >= 0 && currID + neighboursArr[0] < allCells.length) {
-//         if (notValid.includes(currID + neighboursArr[0])) {
-//             checkNeighbours(currNode, neighboursArr.slice(1));
-
-//         } else {
-//             validNeighbour.actualCell = allCells[currID + neighboursArr[0]];
-//             validNeighbour.shortestPath = currNode.shortestPath + 1;
-//             pathing.allNodes.push(validNeighbour);
-//             checkNeighbours(currNode, neighboursArr.slice(1));
-//         }
-//     }
-// }
-
-function colorizeNode(currNode:myNode) {
-
-    currNode.actualCell.setAttribute("style", "background-color:#FFE400;");
-    
-    setTimeout(() => {
-        currNode.actualCell.setAttribute("style", "background-color:#FC4445;")
-    }, playfieldMenu.colorizeDelay * playfieldMenu.speedMultiplier);
+    currentNode.actualCell.style.borderRadius = "15px";
+    currentNode.actualCell.style.backgroundColor = "hsl(224, 83%, 61%)";
+    currentNode.actualCell.style.animationName = "myCellFadeIn";
+    currentNode.actualCell.style.animationDuration = "2s";
 }
 
-function markShortestPath(currNode:myNode | undefined) {
 
-    if (currNode == undefined) {
-        return;
-    }
+function markShortestPath(currentNode:myNode) {
 
-    if (currNode!.predecessorNode != currNode) {
-        currNode!.actualCell.setAttribute("style", "background-color:#86C232;");
+    currentNode.actualCell.style.backgroundColor = "hsl(59, 78%, 57%)";
+    currentNode.actualCell.style.animationName = "shortestPath";
+    currentNode.actualCell.style.animationDuration = "2s";
+
+
+    let nextNode:myNode | undefined = currentNode.predecessorNode;
+
+    if (nextNode !== undefined) {
         setTimeout(() => {
-            markShortestPath(currNode!.predecessorNode);
-        }, playfieldMenu.colorizeDelay * playfieldMenu.speedMultiplier)
-
-    } else {
-        currNode!.actualCell.setAttribute("style", "background-color:#86C232;");
+            markShortestPath(nextNode!);
+        }, 100)
     }
 }
-
-// function getNextNode(currNode:myNode) {
-
-//     let next:myNode = {actualCell:undefined, predecessorNode:undefined, shortestPath:Infinity};
-//     let validNextNodes = pathing.allNodes.filter((node:myNode) => {
-//         return !pathing.visitedNodes.includes(node);
-//     })
-    
-//     for (let i = 0; i < validNextNodes.length; i++) {
-//         if (validNextNodes[i].shortestPath < next.shortestPath) {
-//             next = validNextNodes[i];
-//         }
-//     }
-
-//     return next;
-// }

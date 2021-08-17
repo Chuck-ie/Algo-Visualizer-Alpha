@@ -1,7 +1,6 @@
 "use strict";
 var playfield = {
     playfieldContainer: document.getElementById("playfield_container"),
-    allRows: document.getElementsByClassName("row"),
     isResizing: false,
     emptyActive: true,
     sortingActive: false,
@@ -32,11 +31,16 @@ function createPathingPlayfield(height, width) {
             newCell.id = `${(j * cellCount) + k}`;
             newCell.setAttribute("onclick", "setTargetCell(this.id)");
             if (j == Math.floor(rowCount / 2) && k == Math.floor(cellCount / 2)) {
+                // adding marker to start
+                let marker = document.createElement("i");
+                marker.className = "fas fa-angle-down";
+                marker.style.position = "relative";
+                marker.style.left = "2.5px";
                 newCell.style.backgroundColor = "#FC4445";
-                newCell.style.filter = "brightness(0.9)";
+                newCell.appendChild(marker);
                 pathing.startCell = newCell;
             }
-            playfield.allRows[j].appendChild(newCell).className = "cell";
+            pathing.allRows[j].appendChild(newCell).className = "cell";
         }
     }
     setMenuHeight();

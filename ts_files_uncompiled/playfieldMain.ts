@@ -2,7 +2,6 @@
 var playfield:any = {
 
     playfieldContainer: document.getElementById("playfield_container"),
-    allRows: document.getElementsByClassName("row"),
     isResizing: false,
     emptyActive: true,
     sortingActive: false,
@@ -29,24 +28,29 @@ function createPathingPlayfield(height:number, width:number) {
 
     // add rows to playfield container depending on the current window size
     for (let i = 0; i < rowCount; i++) {
-        let newRow:any = document.createElement("div");
+        let newRow:HTMLElement = document.createElement("div");
         playfield.playfieldContainer!.appendChild(newRow).className = "row";
     }
 
     // add cells to each row element
     for (let j = 0; j < rowCount; j++) {
         for (let k = 0; k < cellCount; k++) {
-            let newCell:any = document.createElement("div");
+            let newCell:HTMLElement = document.createElement("div");
             newCell.id = `${(j * cellCount) + k}`;
             newCell.setAttribute("onclick", "setTargetCell(this.id)");
 
             if (j == Math.floor(rowCount / 2) && k == Math.floor(cellCount / 2)) {
+                // adding marker to start
+                let marker:HTMLElement = document.createElement("i");
+                marker.className = "fas fa-angle-down" ;
+                marker.style.position = "relative";
+                marker.style.left = "2.5px"
                 newCell.style.backgroundColor = "#FC4445";
-                newCell.style.filter = "brightness(0.9)";
+                newCell.appendChild(marker);
                 pathing.startCell = newCell;
             }
 
-            playfield.allRows[j].appendChild(newCell).className = "cell";
+            pathing.allRows[j].appendChild(newCell).className = "cell";
         }
     }
 
@@ -64,7 +68,7 @@ function createSortingPlayfield(width:number) {
 
     // create divs elements for playfield to be sorted
     for (let i = 0; i < elementCount; i++) {
-        let newElement:any = document.createElement("div");
+        let newElement:HTMLElement = document.createElement("div");
         let elementHeight:number = (i * 10) + 10;
         newElement.id = `${i}`;
         newElement.className = "sortingElement";
@@ -75,7 +79,7 @@ function createSortingPlayfield(width:number) {
     // randomize element order
     for (let j = elementCount; j > 0; j--) {
         let randomIndex:number = Math.floor(Math.random() * j);
-        let randomElement:any = sortingRelated.allSortElements[randomIndex]
+        let randomElement:HTMLElement = sortingRelated.allSortElements[randomIndex]
 
         sortingRelated.allSortElements.splice(randomIndex, 1);
         playfield.playfieldContainer.appendChild(randomElement);
@@ -92,7 +96,7 @@ function createEmptyPlayfield(height:number, width:number) {
     playfield.emptyActive = true;
 
     // create empty playfield
-    let emptyElement:any = document.createElement("div");
+    let emptyElement:HTMLElement = document.createElement("div");
     emptyElement.setAttribute("style", `border-radius:0px 10px 10px 0px;color:black;min-height:${0.6*height}px;min-width:${0.5*width}px;background-color:white;text-align:center;font-size:22px;`);
     emptyElement.innerHTML = "Select Algorithm Type first!";
     playfield.playfieldContainer.appendChild(emptyElement);
