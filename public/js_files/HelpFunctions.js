@@ -54,7 +54,7 @@ function setMenuHeight() {
     let menuElement = document.getElementById("playfield_menu");
     menuElement.style.minHeight = `${newHeight}px`;
 }
-function StartResetGlow(self) {
+function startResetGlow(self) {
     self.style.backgroundColor = "#14A76C";
     self.style.filter = "brightness(1.2)";
     setTimeout(() => {

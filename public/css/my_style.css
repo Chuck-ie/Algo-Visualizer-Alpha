@@ -114,22 +114,15 @@ body {
     filter: brightness(1.2) !important;
 }
 
+#my_pathing {
+    display: none;
+}
 
+#my_sorting {
+    display: none;
+}
 
 /* pathing playfield related */
-
-
-
-/* sorting playfield related */
-
-.sortingElement {
-    background-color: white;
-    border:1px solid gray;
-    min-width:10px;
-    margin-right:2px;
-    position:relative;
-    display:inline-block;
-}
 
 .cell {
     position: relative;
@@ -143,5 +136,16 @@ body {
 
 .cell:hover {
     background-color: #FC4445;
-    filter: brightness(0.8);
+    filter: brightness(0.9);
+}
+
+/* sorting playfield related */
+
+.sortingElement {
+    background-color: white;
+    border:1px solid gray;
+    min-width:10px;
+    margin-right:2px;
+    position:relative;
+    display:inline-block;
 }

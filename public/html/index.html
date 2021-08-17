@@ -29,50 +29,72 @@
         <div id="playfield">
             
             <div id="playfield_menu">
-                
+                <!-- ############################################################################ -->
                 <h1 style="margin:7px;padding-bottom:5px;">Algorithm Menu</h1>
-
+                <!-- ############################################################################ -->
                 <div class="my_dropdown_menu" onclick="showDropdown(my_menu1_header, my_menu1)">
                     <p id="my_menu1_header" style="border-top:1px solid black;">
                         Algorithm Type
                         <i class="fas fa-angle-left"></i>
                     </p>
                     <div class="my_dropdown_options" id="my_menu1" contenteditable="false">
-                        <p onclick="chooseAlgoType(my_menu1_header, this)">Pathfinding</p>
-                        <p onclick="chooseAlgoType(my_menu1_header, this)">Sorting</p>
+                        <p onclick="chooseAlgoType(my_menu1_header, this, my_standard, my_pathing, my_sorting)">Pathfinding</p>
+                        <p onclick="chooseAlgoType(my_menu1_header, this, my_standard, my_pathing, my_sorting)">Sorting</p>
                     </div>
                 </div>
-
-                <div class="my_dropdown_menu" onclick="showDropdown(my_menu2_header, my_menu2)">
+                <!-- ############################################################################ -->
+                <div id="my_standard" class="my_dropdown_menu" onclick="showDropdown(my_menu2_header, my_menu2)">
                     <p id="my_menu2_header">
                         Choose Algorithm
                         <i class="fas fa-angle-left"></i>
                     </p>
                     <div class="my_dropdown_options" id="my_menu2" contenteditable="false">
-                        <p onclick="selectAlgo(my_menu2_header, this)">Dijkstra</p>
+                        <p>Select Algotype first</p>
                     </div>
                 </div>
-
-                <div class="my_dropdown_menu" onclick="showDropdown(my_menu3_header, my_menu3)">
+                <!-- ############################################################################ -->
+                <div id="my_pathing" class="my_dropdown_menu" onclick="showDropdown(my_menu3_header, my_menu3)">
                     <p id="my_menu3_header">
-                        Choose Speed
+                        Choose Algorithm
                         <i class="fas fa-angle-left"></i>
                     </p>
                     <div class="my_dropdown_options" id="my_menu3" contenteditable="false">
-                        <p id="0.25" onclick="selectAlgoSpeed(my_menu3_header, my_menu3, this)">0.25x</p>
-                        <p id="0.5" onclick="selectAlgoSpeed(my_menu3_header, my_menu3, this)">0.50x</p>
-                        <p id="0.75" onclick="selectAlgoSpeed(my_menu3_header, my_menu3, this)">0.75x</p>
-                        <p id="1.0" onclick="selectAlgoSpeed(my_menu3_header, my_menu3, this)">1.00x</p>
+                        <p onclick="selectAlgo(my_menu3_header, this)">Dijkstra</p>
                     </div>
                 </div>
-
+                <!-- ############################################################################ -->
+                <div id="my_sorting" class="my_dropdown_menu" onclick="showDropdown(my_menu4_header, my_menu4)">
+                    <p id="my_menu4_header">
+                        Choose Algorithm
+                        <i class="fas fa-angle-left"></i>
+                    </p>
+                    <div class="my_dropdown_options" id="my_menu4" contenteditable="false">
+                        <p onclick="selectAlgo(my_menu4_header, this)">Selection Sort</p>
+                        <p onclick="selectAlgo(my_menu4_header, this)">Quick Sort</p>
+                    </div>
+                </div>
+                <!-- ############################################################################ -->
+                <div class="my_dropdown_menu" onclick="showDropdown(my_menu5_header, my_menu5)">
+                    <p id="my_menu5_header">
+                        Choose Speed
+                        <i class="fas fa-angle-left"></i>
+                    </p>
+                    <div class="my_dropdown_options" id="my_menu5" contenteditable="false">
+                        <p id="0.25" onclick="selectAlgoSpeed(my_menu5_header, my_menu5, this)">0.25x</p>
+                        <p id="0.5" onclick="selectAlgoSpeed(my_menu5_header, my_menu5, this)">0.50x</p>
+                        <p id="0.75" onclick="selectAlgoSpeed(my_menu5_header, my_menu5, this)">0.75x</p>
+                        <p id="1.0" onclick="selectAlgoSpeed(my_menu5_header, my_menu5, this)">1.00x</p>
+                    </div>
+                </div>
+                <!-- ############################################################################ -->
                 <div class="my_start_reset" onclick="newResetPlayfield(this)">
                     <p>Reset Playfield</p>
                 </div>
-
-                <div class="my_start_reset" onclick="newTestStart(this)">
+                <!-- ############################################################################ -->
+                <div class="my_start_reset" onclick="testStart(this)">
                     <p>Start Algorithm</p>
                 </div>
+                <!-- ############################################################################ -->
 
 
                 <!-- <div class="dropdown_menu">

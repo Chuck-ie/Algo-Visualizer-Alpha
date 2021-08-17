@@ -7,6 +7,7 @@ var playfield:any = {
     emptyActive: true,
     sortingActive: false,
     pathingActive: false,
+    algoInProgress: false,
 }
 
 function clearPlayfield() {
@@ -37,11 +38,11 @@ function createPathingPlayfield(height:number, width:number) {
         for (let k = 0; k < cellCount; k++) {
             let newCell:any = document.createElement("div");
             newCell.id = `${(j * cellCount) + k}`;
-            newCell.onclick = "setTargetCell(this.id)";
+            newCell.setAttribute("onclick", "setTargetCell(this.id)");
 
             if (j == Math.floor(rowCount / 2) && k == Math.floor(cellCount / 2)) {
                 newCell.style.backgroundColor = "#FC4445";
-                newCell.style.filter = "brigthness(0.8)";
+                newCell.style.filter = "brightness(0.9)";
                 pathingRelated.startCell = newCell;
             }
 

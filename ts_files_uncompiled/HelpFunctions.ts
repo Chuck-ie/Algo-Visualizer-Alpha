@@ -75,7 +75,7 @@ function setMenuHeight() {
     menuElement.style.minHeight = `${newHeight}px`;
 }
 
-function StartResetGlow(self:any) {
+function startResetGlow(self:any) {
 
     self.style.backgroundColor = "#14A76C";
     self.style.filter = "brightness(1.2)";
