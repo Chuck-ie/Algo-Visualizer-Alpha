@@ -47,6 +47,7 @@ async function selectionSort(playfieldDivs:HTMLElement[]) {
     }
 
     confirmOrder(playfieldDivs);
+    playfield.algoInProgress = false;
 }
 
 function quickSort() {

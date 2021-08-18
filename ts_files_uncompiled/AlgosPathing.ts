@@ -70,4 +70,6 @@ function dijkstra(startCell:HTMLElement, targetCell:any, rowLength:number) {
         currentNode = pathing.allNodes[i];
         currentID = currentNode.actualCell.id;
     }
+
+    playfield.algoInProgress = false;
 }

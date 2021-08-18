@@ -50,4 +50,5 @@ function dijkstra(startCell, targetCell, rowLength) {
         currentNode = pathing.allNodes[i];
         currentID = currentNode.actualCell.id;
     }
+    playfield.algoInProgress = false;
 }

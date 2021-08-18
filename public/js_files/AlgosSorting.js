@@ -49,6 +49,7 @@ function selectionSort(playfieldDivs) {
             resetColors(playfieldDivs.slice(i + 1));
         }
         confirmOrder(playfieldDivs);
+        playfield.algoInProgress = false;
     });
 }
 function quickSort() {
