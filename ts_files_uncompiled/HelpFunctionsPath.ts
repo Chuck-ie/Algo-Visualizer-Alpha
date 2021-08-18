@@ -23,7 +23,6 @@ function setTargetCell(id:string) {
         } else {
             pathing.targetCell = document.getElementById(id);
             pathing.targetCell.style.backgroundColor = "#14A76C";
-
         }
 
     } else {
@@ -53,5 +52,7 @@ function markShortestPath(currentNode:myNode) {
         setTimeout(() => {
             markShortestPath(nextNode!);
         }, 100)
+    } else {
+        playfield.algoInProgress = false;
     }
 }

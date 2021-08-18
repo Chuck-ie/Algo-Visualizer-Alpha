@@ -40,36 +40,38 @@ function selectAlgo(myMenuHeaderX, self) {
     playfieldMenu.algoSelected = true;
     setHeaderName(myMenuHeaderX, self);
 }
-function resetAlgo() {
+function resetPlayfield(self) {
+    startResetGlow(self);
+    clearPlayfield();
     let windowSize = getWindowSize();
-    if (playfield.sortingAlgoActive === true) {
-        playfield.sortingAlgoActive = false;
-        clearPlayfield();
+    playfield.algoInProgress = false;
+    if (playfield.sortingActive === true) {
         createSortingPlayfield((windowSize[1] * 0.5) / 16);
     }
-    else if (playfield.pathfindingAlgoActive === true) {
-        pathing.targetFound = false;
-        pathing.targetCell = undefined;
-        pathing.allCells = undefined;
-        pathing.allNodes = new Array();
-        playfield.pathfindingAlgoActive = false;
-        clearPlayfield();
+    else if (playfield.pathingActive === true) {
         createPathingPlayfield(windowSize[0] * 0.6, windowSize[1] * 0.5);
+        // resetting important values to default
+        pathing.targetCell = undefined;
+        pathing.allNodes = new Array();
+        pathing.visitedNodes = new Array();
+        pathing.usedIDs = new Array();
+        pathing.neighboursArr = [1, -1];
     }
-}
-function newResetPlayfield(self) {
-    startResetGlow(self);
+    else if (playfield.emptyActive === true) {
+        createEmptyPlayfield(windowSize[0], windowSize[1]);
+    }
 }
 function testStart(self) {
     startResetGlow(self);
-    (playfieldMenu.algoSelected === true && playfieldMenu.speedSelected === true && playfieldMenu.typeSelected === true) ? startAlgo() : alert("Please select all options!");
-    // if (playfieldMenu.algoSelected === true && playfieldMenu.speedSelected === true && playfieldMenu.typeSelected === true) {
-    //     startAlgo();
-    // } else {
-    //     alert("Please select all options!");
-    // }
+    if (playfieldMenu.algoSelected === true && playfieldMenu.speedSelected === true && playfieldMenu.typeSelected === true) {
+        startAlgo();
+    }
+    else {
+        alert("Please select all options!");
+    }
 }
 function startAlgo() {
+    playfield.algoInProgress = true;
     // case sorting algo selected
     if (playfieldMenu.activeAlgoName.slice(-4) === "Sort") {
         let sortingElements = playfield.playfieldContainer.children;
@@ -94,7 +96,7 @@ function startAlgo() {
         switch (playfieldMenu.activeAlgoName) {
             case "Dijkstra":
                 if (pathing.targetCell !== undefined) {
-                    prepareDijkstra(pathing.startCell, pathing.targetCell, pathing.allRows[0].childElementCount);
+                    dijkstra(pathing.startCell, pathing.targetCell, pathing.allRows[0].childElementCount);
                     break;
                 }
                 else {

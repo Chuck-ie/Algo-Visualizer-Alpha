@@ -44,7 +44,9 @@ function createPathingPlayfield(height:number, width:number) {
                 let marker:HTMLElement = document.createElement("i");
                 marker.className = "fas fa-angle-down" ;
                 marker.style.position = "relative";
-                marker.style.left = "2.5px"
+                marker.style.left = "2.5px";
+                marker.style.color = "black";
+                
                 newCell.style.backgroundColor = "#FC4445";
                 newCell.appendChild(marker);
                 pathing.startCell = newCell;

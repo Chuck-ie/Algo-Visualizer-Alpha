@@ -54,4 +54,7 @@ function markShortestPath(currentNode) {
             markShortestPath(nextNode);
         }, 100);
     }
+    else {
+        playfield.algoInProgress = false;
+    }
 }

@@ -4,18 +4,15 @@
 }
 
 @keyframes myCellFadeIn {
-    0% {background-color: hsl(0, 0%, 100%);}
-    33% {background-color: hsl(224, 96%, 80%);}
-    66% {background-color: hsl(226, 95%, 71%);}
-    100% {background-color: hsl(224, 83%, 61%);}
+    from {background-color: hsl(0, 0%, 100%);}
+    to {background-color: hsl(224, 83%, 61%);}
     from {border-radius: 0px;}
     to {border-radius: 15px;}
 }
 
 @keyframes shortestPath {
-    0% {background-color: hsl(0, 0%, 100%);}
-    50% {background-color: hsl(59, 90%, 80%);}
-    100% {background-color: hsl(59, 78%, 57%);}
+    from {background-color: hsl(0, 0%, 100%);}
+    to {background-color: hsl(59, 78%, 57%);}
 }
 
 body {

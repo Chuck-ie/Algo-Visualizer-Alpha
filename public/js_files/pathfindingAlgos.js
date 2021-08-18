@@ -11,7 +11,7 @@ var pathing = {
     visitedNodes: new Array(),
     usedIDs: new Array()
 };
-function prepareDijkstra(startCell, targetCell, rowLength) {
+function dijkstra(startCell, targetCell, rowLength) {
     // setting missing values for start-/targetNode
     pathing.startNode.actualCell = startCell;
     pathing.targetNode.actualCell = targetCell;
@@ -22,7 +22,7 @@ function prepareDijkstra(startCell, targetCell, rowLength) {
     let currentNode = pathing.startNode;
     let currentID = currentNode.actualCell.id;
     let i = 0;
-    while (pathing.allNodes.length >= pathing.visitedNodes.length) {
+    while (pathing.allNodes.length >= pathing.visitedNodes.length && playfield.algoInProgress === true) {
         if (currentNode === undefined) {
             break;
         }
