@@ -2,62 +2,51 @@ var sortingRelated:any = {
     allSortElements: new Array<any>(),
 }
 
-function selectionSort(sortingElements:any, currNode:any, i=0, j=1, bestNode=currNode, bestIndex=i) {
-    
-    let comparisonNode:any = sortingElements[j];
-    let next_i_loop_available:boolean = true;
-    let next_j_loop_available:boolean = true;
+async function selectionSort(playfieldDivs:HTMLElement[]) {
 
+    for (let i = 0; i < playfieldDivs.length; i++) {
 
-    if (sortingElements[j+1] === undefined) {
-        next_j_loop_available = false;
+        let currentElement:HTMLElement = playfieldDivs[i];
+        let startHeight:number = Number(currentElement.clientHeight)
+        let bestIndex:number = i;
+        let bestHeight:number = currentElement.clientHeight;
+        // set currentElement blue
+        currentElement.style.backgroundColor = "hsl(224, 83%, 61%)";
 
-        if (sortingElements[i+1] === undefined) {
-            next_i_loop_available = false;
+        for (let j = (i + 1); j < playfieldDivs.length; j++) {
+
+            // set comparisonElement yellow
+            playfieldDivs[j].style.backgroundColor = "hsl(59, 78%, 57%)";
+            let comparisonHeight:number = playfieldDivs[j].clientHeight;
+            await sleep(50 / playfieldMenu.speedMultiplier);
+
+            if (comparisonHeight < bestHeight) {
+                // set comparisonElement green
+                if (bestHeight === startHeight) {
+                    // set new best green
+                    playfieldDivs[j].style.backgroundColor = "hsl(172, 47%, 48%)";
+
+                } else {
+                    // set old best red and new best green
+                    playfieldDivs[bestIndex].style.backgroundColor = "hsl(360, 97%, 63%)";  // red
+                    playfieldDivs[j].style.backgroundColor = "hsl(172, 47%, 48%)";          // green
+
+                }
+                bestHeight = comparisonHeight;
+                bestIndex = j;
+
+            } else {
+                // else set comparisonElement red
+                playfieldDivs[j].style.backgroundColor = "hsl(360, 97%, 63%)";
+            }
         }
+
+        playfieldDivs[i].style.minHeight = `${bestHeight}px`;
+        playfieldDivs[bestIndex].style.minHeight = `${startHeight}px`;
+        resetColors(playfieldDivs.slice(i + 1));
     }
 
-    currNode.style.backgroundColor = "blue";
-    comparisonNode.style.backgroundColor = "yellow";
-
-    if (comparisonNode.clientHeight < bestNode.clientHeight) {
-
-        if (bestNode != currNode) {
-            bestNode.style.backgroundColor = "red";
-        }
-
-        bestNode = comparisonNode;
-        bestNode.style.backgroundColor = "green";
-        bestIndex = j;
-    } else {
-        comparisonNode.style.backgroundColor = "red";
-    }
-
-    if (next_i_loop_available === true && next_j_loop_available === true) {
-        setTimeout(() => {
-            selectionSort(sortingElements, currNode, i, j+1, bestNode, bestIndex);
-        }, playfieldMenu.colorizeDelay * playfieldMenu.speedMultiplier)
-
-    } else if (next_i_loop_available === true && next_j_loop_available === false) {
-        setTimeout(() => {
-            swapNodes(sortingElements, i, bestIndex);
-            resetColors(sortingElements.slice(i+1));
-            selectionSort(sortingElements, sortingElements[i+1], i+1, i+1);
-        }, playfieldMenu.colorizeDelay * playfieldMenu.speedMultiplier)
-
-    } else if (next_i_loop_available === false && next_j_loop_available === true) {
-        setTimeout(() => {
-            comparisonNode.style.backgroundColor = "red";
-            selectionSort(sortingElements, currNode, i, j+1, bestNode, bestIndex);
-        }, playfieldMenu.colorizeDelay * playfieldMenu.speedMultiplier)
-
-    } else if (next_i_loop_available === false && next_j_loop_available === false) {
-        swapNodes(sortingElements, i, bestIndex);
-        confirmArrayOrder(sortingElements);
-
-    } else {
-        console.log("idk what happened tbh.");
-    }
+    confirmOrder(playfieldDivs);
 }
 
 function quickSort() {

@@ -1,22 +1,28 @@
 
-function swapNodes(currArray:any, i:number, bestIndex:number) {
-    let tempHeight:string = currArray[i].clientHeight.toString() + "px";
-    currArray[i].style.minHeight = currArray[bestIndex].clientHeight.toString() + "px";
-    currArray[bestIndex].style.minHeight = tempHeight;
+function waitDelay(startTime:number) {
+
+    let currentTime:number = performance.now();
+
+    while ((currentTime - startTime) < 30) {
+        currentTime = performance.now();
+    }
 }
 
-function resetColors(slicedArray:any) {
+function sleep(ms:number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function resetColors(slicedArray:HTMLElement[]) {
+
     slicedArray.forEach((node:any) => {
         node.style.backgroundColor = "white";
     })
 }
 
-function confirmArrayOrder(currArray:any) {
+async function confirmOrder(playfieldDivs:HTMLElement[]) {
 
-    currArray[0].style.backgroundColor = "green";
-    setTimeout(() => {
-        if (currArray[1] !== undefined) {
-            confirmArrayOrder(currArray.slice(1));
-        }
-    }, playfieldMenu.colorizeDelay / 2)
+    for (let i = 0; i < playfieldDivs.length; i++) {
+        playfieldDivs[i].style.backgroundColor = "hsl(172, 47%, 48%)";
+        await sleep(25 / playfieldMenu.speedMultiplier);
+    }
 }

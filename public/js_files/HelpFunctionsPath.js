@@ -8,20 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-function delayColors(currentNode, i) {
-    return __awaiter(this, void 0, void 0, function* () {
-        yield setTimeout(() => {
-            colorizeNode(currentNode);
-        }, i * 10);
-    });
-}
-function waitForColors(currentNode, i) {
-    return __awaiter(this, void 0, void 0, function* () {
-        yield setTimeout(() => {
-            markShortestPath(currentNode);
-        }, i * 10);
-    });
-}
 function setTargetCell(id) {
     if (playfield.algoInProgress === false) {
         if (pathing.targetCell !== undefined) {
@@ -37,6 +23,20 @@ function setTargetCell(id) {
     else {
         alert("You currently cant select a new start\n Please wait or press the 'Reset Algorithm' button.");
     }
+}
+function delayColors(currentNode, i) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield setTimeout(() => {
+            colorizeNode(currentNode);
+        }, i * 10);
+    });
+}
+function waitForColors(currentNode, i) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield setTimeout(() => {
+            markShortestPath(currentNode);
+        }, i * 10);
+    });
 }
 function colorizeNode(currentNode) {
     currentNode.actualCell.style.borderRadius = "15px";

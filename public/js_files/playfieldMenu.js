@@ -31,7 +31,7 @@ function chooseAlgoType(myMenuHeaderX, self, standardElement, pathingElement, so
     }
 }
 function selectAlgoSpeed(myMenuHeaderX, myMenuX, self) {
-    playfieldMenu.speedMultiplier = 1 - Number(self.id);
+    playfieldMenu.speedMultiplier = Number(self.id);
     playfieldMenu.speedSelected = true;
     setHeaderName(myMenuHeaderX, self);
 }
@@ -74,17 +74,9 @@ function startAlgo() {
     playfield.algoInProgress = true;
     // case sorting algo selected
     if (playfieldMenu.activeAlgoName.slice(-4) === "Sort") {
-        let sortingElements = playfield.playfieldContainer.children;
-        let elementsAsArray = new Array();
-        sortingElements.forEach((element) => {
-            elementsAsArray.push(element);
-        });
-        // for (let i = 0; i < sortingElements.length; i++) {
-        //     elementsAsArray.push(sortingElements[i]);
-        // }
         switch (playfieldMenu.activeAlgoName) {
             case "Selection Sort":
-                selectionSort(elementsAsArray, elementsAsArray[0]);
+                selectionSort([...playfield.playfieldContainer.children]);
                 break;
             case "Quick Sort":
                 quickSort();

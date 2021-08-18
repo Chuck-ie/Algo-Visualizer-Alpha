@@ -1,16 +1,4 @@
 
-async function delayColors(currentNode:myNode, i:number) {
-    await setTimeout(() => {
-        colorizeNode(currentNode)
-    }, i * 10)
-}
-
-async function waitForColors(currentNode:myNode, i:number) {
-    await setTimeout(() => {
-        markShortestPath(currentNode);
-    }, i * 10)
-}
-
 function setTargetCell(id:string) {
 
     if (playfield.algoInProgress === false) {
@@ -30,6 +18,18 @@ function setTargetCell(id:string) {
     }
 }
 
+async function delayColors(currentNode:myNode, i:number) {
+    await setTimeout(() => {
+        colorizeNode(currentNode)
+    }, i * 10)
+}
+
+async function waitForColors(currentNode:myNode, i:number) {
+    await setTimeout(() => {
+        markShortestPath(currentNode);
+    }, i * 10)
+}
+
 function colorizeNode(currentNode:myNode) {
 
     currentNode.actualCell.style.borderRadius = "15px";
@@ -37,7 +37,6 @@ function colorizeNode(currentNode:myNode) {
     currentNode.actualCell.style.animationName = "myCellFadeIn";
     currentNode.actualCell.style.animationDuration = "2s";
 }
-
 
 function markShortestPath(currentNode:myNode) {
 
