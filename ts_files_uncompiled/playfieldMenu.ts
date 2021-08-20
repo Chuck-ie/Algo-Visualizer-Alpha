@@ -114,7 +114,7 @@ function startAlgo() {
                 break;
     
             case "Quick Sort":
-                quickSort();
+                quickSort([...playfield.playfieldContainer.children]);
                 break;
         }
 

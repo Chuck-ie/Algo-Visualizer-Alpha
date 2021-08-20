@@ -52,6 +52,7 @@ function selectionSort(playfieldDivs) {
         playfield.algoInProgress = false;
     });
 }
-function quickSort() {
-    alert("quickSort started");
+function quickSort(playfieldDivs) {
+    let pivot = playfieldDivs[playfieldDivs.length - 1];
+    console.log(pivot);
 }

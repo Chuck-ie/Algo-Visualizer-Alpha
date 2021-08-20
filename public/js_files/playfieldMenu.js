@@ -86,7 +86,7 @@ function startAlgo() {
                 selectionSort([...playfield.playfieldContainer.children]);
                 break;
             case "Quick Sort":
-                quickSort();
+                quickSort([...playfield.playfieldContainer.children]);
                 break;
         }
         // case pathing algo selected

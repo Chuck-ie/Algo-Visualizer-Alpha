@@ -50,6 +50,12 @@ async function selectionSort(playfieldDivs:HTMLElement[]) {
     playfield.algoInProgress = false;
 }
 
-function quickSort() {
-    alert("quickSort started");
+function quickSort(playfieldDivs:HTMLElement[]) {
+    
+    let pivot:HTMLElement = playfieldDivs[playfieldDivs.length - 1];
+    
+    
+
+
+
 }
