@@ -9,12 +9,12 @@ var playfieldMenu:any = {
     colorizeDelay: 100,
 }
 
-function chooseAlgoType(myMenuHeaderX:HTMLElement, self:HTMLElement, standardElement:HTMLElement, pathingElement:HTMLElement, sortingElement:HTMLElement) {
+function chooseAlgoType(myMenuHeaderX:HTMLElement, myObject:HTMLElement, standardElement:HTMLElement, pathingElement:HTMLElement, sortingElement:HTMLElement) {
 
-    setHeaderName(myMenuHeaderX, self);
+    setHeaderName(myMenuHeaderX, myObject);
     let windowSize:number[] = getWindowSize();
     let myElements:HTMLElement[] = [standardElement, pathingElement, sortingElement];
-    playfieldMenu.activeAlgoName = self.innerHTML;
+    playfieldMenu.activeAlgoName = myObject.innerHTML;
     playfieldMenu.typeSelected = true;
     playfieldMenu.algoSelected = false;
     clearPlayfield();
@@ -39,23 +39,26 @@ function chooseAlgoType(myMenuHeaderX:HTMLElement, self:HTMLElement, standardEle
     }
 }
 
-function selectAlgoSpeed(myMenuHeaderX:HTMLElement, myMenuX:HTMLElement, self:HTMLElement) {
+function selectAlgoSpeed(myMenuHeaderX:HTMLElement, myMenuX:HTMLElement, myObject:HTMLElement) {
 
-    playfieldMenu.speedMultiplier = Number(self.id);
+    playfieldMenu.speedMultiplier = Number(myObject.id);
     playfieldMenu.speedSelected = true;    
-    setHeaderName(myMenuHeaderX, self);
+    setHeaderName(myMenuHeaderX, myObject);
 }
 
-function selectAlgo(myMenuHeaderX:HTMLElement, self:HTMLElement) {
+function selectAlgo(myMenuHeaderX:HTMLElement, myObject:HTMLElement) {
 
-    playfieldMenu.activeAlgoName = self.innerHTML;
+    playfieldMenu.activeAlgoName = myObject.innerHTML;
     playfieldMenu.algoSelected = true;
-    setHeaderName(myMenuHeaderX, self);
+    setHeaderName(myMenuHeaderX, myObject);
 }
 
-function resetPlayfield(self:HTMLElement) {
+function resetPlayfield(myObject:HTMLElement | undefined = undefined) {
 
-    startResetGlow(self);
+    if (myObject !== undefined) {
+        startResetGlow(myObject);
+    }
+
     clearPlayfield();
 
     let windowSize:number[] = getWindowSize();
@@ -79,11 +82,18 @@ function resetPlayfield(self:HTMLElement) {
     }
 }
 
-function testStart(self:HTMLElement) {
+function testStart(myObject:HTMLElement) {
 
-    startResetGlow(self);
+    startResetGlow(myObject);
 
     if (playfieldMenu.algoSelected === true && playfieldMenu.speedSelected === true && playfieldMenu.typeSelected === true) {
+
+        if (playfield.needsReset === true) {
+            let oldTarget:HTMLElement = pathing.targetCell;
+            resetPlayfield();
+            setTargetCell(oldTarget.id);
+        }
+
         startAlgo();
 
     } else {
@@ -119,6 +129,7 @@ function startAlgo() {
     
                 } else {
                     alert("Please select a targetcell!");
+                    playfield.algoInProgress = false;
                     break;
                 }
         }

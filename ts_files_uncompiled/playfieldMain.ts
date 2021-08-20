@@ -7,6 +7,7 @@ var playfield:any = {
     sortingActive: false,
     pathingActive: false,
     algoInProgress: false,
+    needsReset: false
 }
 
 function clearPlayfield() {

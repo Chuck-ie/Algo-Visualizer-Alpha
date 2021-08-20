@@ -7,11 +7,11 @@ var playfieldMenu = {
     activeAlgoName: "",
     colorizeDelay: 100,
 };
-function chooseAlgoType(myMenuHeaderX, self, standardElement, pathingElement, sortingElement) {
-    setHeaderName(myMenuHeaderX, self);
+function chooseAlgoType(myMenuHeaderX, myObject, standardElement, pathingElement, sortingElement) {
+    setHeaderName(myMenuHeaderX, myObject);
     let windowSize = getWindowSize();
     let myElements = [standardElement, pathingElement, sortingElement];
-    playfieldMenu.activeAlgoName = self.innerHTML;
+    playfieldMenu.activeAlgoName = myObject.innerHTML;
     playfieldMenu.typeSelected = true;
     playfieldMenu.algoSelected = false;
     clearPlayfield();
@@ -30,18 +30,20 @@ function chooseAlgoType(myMenuHeaderX, self, standardElement, pathingElement, so
             break;
     }
 }
-function selectAlgoSpeed(myMenuHeaderX, myMenuX, self) {
-    playfieldMenu.speedMultiplier = Number(self.id);
+function selectAlgoSpeed(myMenuHeaderX, myMenuX, myObject) {
+    playfieldMenu.speedMultiplier = Number(myObject.id);
     playfieldMenu.speedSelected = true;
-    setHeaderName(myMenuHeaderX, self);
+    setHeaderName(myMenuHeaderX, myObject);
 }
-function selectAlgo(myMenuHeaderX, self) {
-    playfieldMenu.activeAlgoName = self.innerHTML;
+function selectAlgo(myMenuHeaderX, myObject) {
+    playfieldMenu.activeAlgoName = myObject.innerHTML;
     playfieldMenu.algoSelected = true;
-    setHeaderName(myMenuHeaderX, self);
+    setHeaderName(myMenuHeaderX, myObject);
 }
-function resetPlayfield(self) {
-    startResetGlow(self);
+function resetPlayfield(myObject = undefined) {
+    if (myObject !== undefined) {
+        startResetGlow(myObject);
+    }
     clearPlayfield();
     let windowSize = getWindowSize();
     playfield.algoInProgress = false;
@@ -61,9 +63,14 @@ function resetPlayfield(self) {
         createEmptyPlayfield(windowSize[0], windowSize[1]);
     }
 }
-function testStart(self) {
-    startResetGlow(self);
+function testStart(myObject) {
+    startResetGlow(myObject);
     if (playfieldMenu.algoSelected === true && playfieldMenu.speedSelected === true && playfieldMenu.typeSelected === true) {
+        if (playfield.needsReset === true) {
+            let oldTarget = pathing.targetCell;
+            resetPlayfield();
+            setTargetCell(oldTarget.id);
+        }
         startAlgo();
     }
     else {
@@ -93,6 +100,7 @@ function startAlgo() {
                 }
                 else {
                     alert("Please select a targetcell!");
+                    playfield.algoInProgress = false;
                     break;
                 }
         }

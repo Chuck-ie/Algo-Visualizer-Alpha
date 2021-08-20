@@ -63,9 +63,9 @@ function showDropdown(myMenuHeaderX:HTMLElement, myMenuX:HTMLElement) {
     }
 }
 
-function setHeaderName(myMenuHeaderX:HTMLElement, self:HTMLElement) {
+function setHeaderName(myMenuHeaderX:HTMLElement, myObject:HTMLElement) {
 
-    myMenuHeaderX.innerHTML = self.innerHTML + "<i class='fas fa-angle-left'></i>";
+    myMenuHeaderX.innerHTML = myObject.innerHTML + "<i class='fas fa-angle-left'></i>";
 }
 
 function setMenuHeight() {
@@ -75,12 +75,12 @@ function setMenuHeight() {
     menuElement.style.minHeight = `${newHeight}px`;
 }
 
-function startResetGlow(self:HTMLElement) {
+function startResetGlow(myObject:HTMLElement) {
 
-    self.style.backgroundColor = "#14A76C";
-    self.style.filter = "brightness(1.2)";
+    myObject.style.backgroundColor = "#14A76C";
+    myObject.style.filter = "brightness(1.2)";
     setTimeout(() => {
-        self.style.backgroundColor = "#4056A1";
-        self.style.filter = "brightness(1.0)";
+        myObject.style.backgroundColor = "#4056A1";
+        myObject.style.filter = "brightness(1.0)";
     }, 1000);
 }

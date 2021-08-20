@@ -18,7 +18,7 @@ async function selectionSort(playfieldDivs:HTMLElement[]) {
             // set comparisonElement yellow
             playfieldDivs[j].style.backgroundColor = "hsl(59, 78%, 57%)";
             let comparisonHeight:number = playfieldDivs[j].clientHeight;
-            await sleep(50 / playfieldMenu.speedMultiplier);
+            await sleep(10 / playfieldMenu.speedMultiplier);
 
             if (comparisonHeight < bestHeight) {
                 // set comparisonElement green

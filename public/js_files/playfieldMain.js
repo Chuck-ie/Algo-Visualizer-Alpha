@@ -6,6 +6,7 @@ var playfield = {
     sortingActive: false,
     pathingActive: false,
     algoInProgress: false,
+    needsReset: false
 };
 function clearPlayfield() {
     for (let i = playfield.playfieldContainer.childNodes.length - 1; i >= 0; i--) {

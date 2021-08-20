@@ -28,14 +28,14 @@ function delayColors(currentNode, i) {
     return __awaiter(this, void 0, void 0, function* () {
         yield setTimeout(() => {
             colorizeNode(currentNode);
-        }, i * 10);
+        }, (i * 5) / playfieldMenu.speedMultiplier);
     });
 }
 function waitForColors(currentNode, i) {
     return __awaiter(this, void 0, void 0, function* () {
         yield setTimeout(() => {
             markShortestPath(currentNode);
-        }, i * 10);
+        }, (i * 5) / playfieldMenu.speedMultiplier);
     });
 }
 function colorizeNode(currentNode) {
@@ -56,5 +56,6 @@ function markShortestPath(currentNode) {
     }
     else {
         playfield.algoInProgress = false;
+        playfield.needsReset = true;
     }
 }

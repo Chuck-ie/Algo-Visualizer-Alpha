@@ -46,19 +46,19 @@ function showDropdown(myMenuHeaderX, myMenuX) {
         myMenuHeaderX.style.filter = "brightness(1.2)";
     }
 }
-function setHeaderName(myMenuHeaderX, self) {
-    myMenuHeaderX.innerHTML = self.innerHTML + "<i class='fas fa-angle-left'></i>";
+function setHeaderName(myMenuHeaderX, myObject) {
+    myMenuHeaderX.innerHTML = myObject.innerHTML + "<i class='fas fa-angle-left'></i>";
 }
 function setMenuHeight() {
     let newHeight = playfield.playfieldContainer.clientHeight;
     let menuElement = document.getElementById("playfield_menu");
     menuElement.style.minHeight = `${newHeight}px`;
 }
-function startResetGlow(self) {
-    self.style.backgroundColor = "#14A76C";
-    self.style.filter = "brightness(1.2)";
+function startResetGlow(myObject) {
+    myObject.style.backgroundColor = "#14A76C";
+    myObject.style.filter = "brightness(1.2)";
     setTimeout(() => {
-        self.style.backgroundColor = "#4056A1";
-        self.style.filter = "brightness(1.0)";
+        myObject.style.backgroundColor = "#4056A1";
+        myObject.style.filter = "brightness(1.0)";
     }, 1000);
 }

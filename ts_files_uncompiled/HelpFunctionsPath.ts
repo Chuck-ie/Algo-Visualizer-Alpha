@@ -21,13 +21,13 @@ function setTargetCell(id:string) {
 async function delayColors(currentNode:myNode, i:number) {
     await setTimeout(() => {
         colorizeNode(currentNode)
-    }, i * 10)
+    }, (i * 5) / playfieldMenu.speedMultiplier)
 }
 
 async function waitForColors(currentNode:myNode, i:number) {
     await setTimeout(() => {
         markShortestPath(currentNode);
-    }, i * 10)
+    }, (i * 5) / playfieldMenu.speedMultiplier)
 }
 
 function colorizeNode(currentNode:myNode) {
@@ -53,5 +53,6 @@ function markShortestPath(currentNode:myNode) {
         }, 100)
     } else {
         playfield.algoInProgress = false;
+        playfield.needsReset = true;
     }
 }
