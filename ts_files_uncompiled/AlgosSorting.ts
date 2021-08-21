@@ -1,4 +1,4 @@
-var sortingRelated:any = {
+var sorting:any = {
     allSortElements: new Array<any>(),
 }
 
@@ -11,12 +11,12 @@ async function selectionSort(playfieldDivs:HTMLElement[]) {
         let bestIndex:number = i;
         let bestHeight:number = currentElement.clientHeight;
         // set currentElement blue
-        currentElement.style.backgroundColor = "hsl(224, 83%, 61%)";
+        currentElement.style.backgroundColor = colors.blue;
 
         for (let j = (i + 1); j < playfieldDivs.length; j++) {
 
             // set comparisonElement yellow
-            playfieldDivs[j].style.backgroundColor = "hsl(59, 78%, 57%)";
+            playfieldDivs[j].style.backgroundColor = colors.yellow;
             let comparisonHeight:number = playfieldDivs[j].clientHeight;
             await sleep(10 / playfieldMenu.speedMultiplier);
 
@@ -24,12 +24,12 @@ async function selectionSort(playfieldDivs:HTMLElement[]) {
                 // set comparisonElement green
                 if (bestHeight === startHeight) {
                     // set new best green
-                    playfieldDivs[j].style.backgroundColor = "hsl(172, 47%, 48%)";
+                    playfieldDivs[j].style.backgroundColor = colors.green;
 
                 } else {
                     // set old best red and new best green
-                    playfieldDivs[bestIndex].style.backgroundColor = "hsl(360, 97%, 63%)";  // red
-                    playfieldDivs[j].style.backgroundColor = "hsl(172, 47%, 48%)";          // green
+                    playfieldDivs[bestIndex].style.backgroundColor = colors.red;
+                    playfieldDivs[j].style.backgroundColor = colors.green;
 
                 }
                 bestHeight = comparisonHeight;
@@ -37,7 +37,7 @@ async function selectionSort(playfieldDivs:HTMLElement[]) {
 
             } else {
                 // else set comparisonElement red
-                playfieldDivs[j].style.backgroundColor = "hsl(360, 97%, 63%)";
+                playfieldDivs[j].style.backgroundColor = colors.red;
             }
         }
 
@@ -50,12 +50,67 @@ async function selectionSort(playfieldDivs:HTMLElement[]) {
     playfield.algoInProgress = false;
 }
 
-function quickSort(playfieldDivs:HTMLElement[]) {
-    
-    let pivot:HTMLElement = playfieldDivs[playfieldDivs.length - 1];
-    
-    
+async function quickSort(playfieldDivs:HTMLElement[], lowest:number, highest:number) {
+
+    if (lowest < highest) {
+        let index:number = await getIndex(playfieldDivs, lowest, highest);
+
+        await quickSort(playfieldDivs, lowest, index-1);
+        await quickSort(playfieldDivs, index+1, highest);
+    } else if (lowest === highest) [
+        confirmOrder(playfieldDivs.slice(lowest, lowest+1))
+    ]
+}
+
+async function getIndex(playfieldDivs:HTMLElement[], lowest:number, highest:number) {
+
+    let pivot:number = highest;
+    let i:number = lowest;
+    let j:number = highest-1
+    let delay:number = 50;
+
+    playfieldDivs[pivot].style.backgroundColor = colors.blue;
+    playfieldDivs[i].style.backgroundColor = colors.yellow;
+    playfieldDivs[j].style.backgroundColor = colors.red;
+    await sleep(delay);
+
+    while (i < j) {
 
 
+        while (i < highest && playfieldDivs[i].clientHeight < playfieldDivs[pivot].clientHeight) {
+            i++;
+            // colorize current element yellow
+            await colorizeElement(playfieldDivs, i, colors.yellow, "i", delay);
+        }
 
+        while (j > lowest && playfieldDivs[j].clientHeight >= playfieldDivs[pivot].clientHeight) {
+            j--;
+            // colorize current element red
+            await colorizeElement(playfieldDivs, j, colors.red, "j", delay);
+        }
+
+        if (i < j) {
+            swapHeights(playfieldDivs, i, j, "j");
+        }
+    }
+
+    if (playfieldDivs[i].clientHeight > playfieldDivs[pivot].clientHeight) {
+        swapHeights(playfieldDivs, i, highest, "pivot");
+    }
+
+    // set color of sorted element to green
+    playfieldDivs[i].style.backgroundColor = colors.green;
+
+    // get unsorted elements
+    let sortedElements:HTMLElement[] | undefined = playfieldDivs.filter((element:HTMLElement) => {
+        // all colors that aren't green === all elements that aren't sorted yet
+        return element.style.backgroundColor != "rgb(65, 180, 165)";
+    })
+
+    // set all unsorted elements to white
+    sortedElements.forEach((element:HTMLElement) => {
+        element.style.backgroundColor = "white";
+    })
+
+    return i;
 }

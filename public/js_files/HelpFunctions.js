@@ -9,8 +9,8 @@ function doOnLoad() {
     createEmptyPlayfield(windowSize[0], windowSize[1]);
 }
 function doOnResize() {
-    let windowSize = getWindowSize();
     if (playfield.isResizing === false) {
+        let windowSize = getWindowSize();
         playfield.isResizing = true;
         clearPlayfield();
         if (playfield.emptyActive === true) {
@@ -24,7 +24,7 @@ function doOnResize() {
         }
         setTimeout(() => {
             playfield.isResizing = false;
-        }, 100);
+        }, 50);
     }
 }
 // changes appearance of dropdown menu points
@@ -49,8 +49,14 @@ function showDropdown(myMenuHeaderX, myMenuX) {
 function setHeaderName(myMenuHeaderX, myObject) {
     myMenuHeaderX.innerHTML = myObject.innerHTML + "<i class='fas fa-angle-left'></i>";
 }
-function setMenuHeight() {
-    let newHeight = playfield.playfieldContainer.clientHeight;
+function setMenuHeight(rows = 0) {
+    let newHeight;
+    if (rows !== 0) {
+        newHeight = rows * 24;
+    }
+    else {
+        newHeight = playfield.playfieldContainer.clientHeight;
+    }
     let menuElement = document.getElementById("playfield_menu");
     menuElement.style.minHeight = `${newHeight}px`;
 }

@@ -40,12 +40,14 @@ function waitForColors(currentNode, i) {
 }
 function colorizeNode(currentNode) {
     currentNode.actualCell.style.borderRadius = "15px";
-    currentNode.actualCell.style.backgroundColor = "hsl(224, 83%, 61%)";
+    // hsl below meaning blue color
+    currentNode.actualCell.style.backgroundColor = colors.blue;
     currentNode.actualCell.style.animationName = "myCellFadeIn";
     currentNode.actualCell.style.animationDuration = "2s";
 }
 function markShortestPath(currentNode) {
-    currentNode.actualCell.style.backgroundColor = "hsl(59, 78%, 57%)";
+    // hsl below meaning yellow color
+    currentNode.actualCell.style.backgroundColor = colors.yellow;
     currentNode.actualCell.style.animationName = "shortestPath";
     currentNode.actualCell.style.animationDuration = "2s";
     let nextNode = currentNode.predecessorNode;

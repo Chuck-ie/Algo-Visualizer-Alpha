@@ -139,7 +139,7 @@ body {
 /* pathing playfield related */
 
 .cell {
-    position: relative;
+    position: absolute;
     background-color: white;
     border:1px solid gray;
     min-width: 20px;
@@ -157,9 +157,16 @@ body {
 
 .sortingElement {
     background-color: white;
-    border:1px solid gray;
-    min-width:10px;
-    margin-right:2px;
-    position:relative;
-    display:inline-block;
+    border: 1px solid gray;
+    min-width: 10px;
+    margin-right: 2px;
+    position: relative;
+    display: inline-block;
+}
+
+
+@media (max-width: 1100px) {
+    #playfield {
+        left: 300px;
+    }
 }

@@ -8,6 +8,12 @@ var playfield = {
     algoInProgress: false,
     needsReset: false
 };
+var colors = {
+    yellow: "hsl(59, 78%, 57%)",
+    red: "hsl(360, 97%, 63%)",
+    green: "hsl(172, 47%, 48%)",
+    blue: "hsl(224, 83%, 61%)"
+};
 function clearPlayfield() {
     for (let i = playfield.playfieldContainer.childNodes.length - 1; i >= 0; i--) {
         playfield.playfieldContainer.childNodes[i].remove();
@@ -30,7 +36,9 @@ function createPathingPlayfield(height, width) {
         for (let k = 0; k < cellCount; k++) {
             let newCell = document.createElement("div");
             newCell.id = `${(j * cellCount) + k}`;
-            newCell.setAttribute("onclick", "setTargetCell(this.id)");
+            newCell.style.left = `${(k * 24) + 2 + document.getElementById("playfield_menu").clientWidth}px`;
+            newCell.style.top = `${j * 24}px`;
+            newCell.setAttribute("onclick", `setTargetCell(this.id)`);
             if (j == Math.floor(rowCount / 2) && k == Math.floor(cellCount / 2)) {
                 // adding marker to start
                 let marker = document.createElement("i");
@@ -45,7 +53,7 @@ function createPathingPlayfield(height, width) {
             pathing.allRows[j].appendChild(newCell).className = "cell";
         }
     }
-    setMenuHeight();
+    setMenuHeight(rowCount);
 }
 function createSortingPlayfield(width) {
     // active playfield = true, else = false
@@ -53,20 +61,20 @@ function createSortingPlayfield(width) {
     playfield.sortingActive = true;
     playfield.emptyActive = false;
     let elementCount = Math.floor(width);
-    // create divs elements for playfield to be sorted
+    // create div elements for playfield to be sorted
     for (let i = 0; i < elementCount; i++) {
         let newElement = document.createElement("div");
         let elementHeight = (i * 10) + 10;
         newElement.id = `${i}`;
         newElement.className = "sortingElement";
         newElement.style.minHeight = `${elementHeight}px`;
-        sortingRelated.allSortElements.push(newElement);
+        sorting.allSortElements.push(newElement);
     }
     // randomize element order
     for (let j = elementCount; j > 0; j--) {
         let randomIndex = Math.floor(Math.random() * j);
-        let randomElement = sortingRelated.allSortElements[randomIndex];
-        sortingRelated.allSortElements.splice(randomIndex, 1);
+        let randomElement = sorting.allSortElements[randomIndex];
+        sorting.allSortElements.splice(randomIndex, 1);
         playfield.playfieldContainer.appendChild(randomElement);
     }
     setMenuHeight();

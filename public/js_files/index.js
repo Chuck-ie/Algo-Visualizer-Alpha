@@ -1,6 +1,6 @@
 "use strict";
 const express = require('express'), path = require('path');
-const PORT = process.env.PORT || 1337;
+const PORT = process.env.PORT || 4000;
 const app = express();
 console.log(`Server running on Port: ${PORT}`);
 // Initializing app uses

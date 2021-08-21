@@ -15,9 +15,9 @@ function doOnLoad() {
 
 function doOnResize() {
 
-    let windowSize:number[] = getWindowSize();
-
     if (playfield.isResizing === false) {
+
+        let windowSize:number[] = getWindowSize();
 
         playfield.isResizing = true;
         clearPlayfield();
@@ -34,7 +34,7 @@ function doOnResize() {
         }
         setTimeout(() => {
             playfield.isResizing = false;
-        }, 100)
+        }, 50)
     }
 }
 
@@ -68,9 +68,17 @@ function setHeaderName(myMenuHeaderX:HTMLElement, myObject:HTMLElement) {
     myMenuHeaderX.innerHTML = myObject.innerHTML + "<i class='fas fa-angle-left'></i>";
 }
 
-function setMenuHeight() {
+function setMenuHeight(rows=0) {
 
-    let newHeight:number = playfield.playfieldContainer.clientHeight;
+    let newHeight:number
+
+    if (rows !== 0) {
+        newHeight = rows*24;
+
+    } else {
+        newHeight = playfield.playfieldContainer.clientHeight;
+    }
+
     let menuElement:HTMLElement = document.getElementById("playfield_menu")!;
     menuElement.style.minHeight = `${newHeight}px`;
 }

@@ -106,15 +106,16 @@ function startAlgo() {
     playfield.algoInProgress = true;
     // case sorting algo selected
     if (playfieldMenu.activeAlgoName.slice(-4) === "Sort") {
+        let myArray:HTMLElement[] = [...playfield.playfieldContainer.children];
 
         switch(playfieldMenu.activeAlgoName) {
             
             case "Selection Sort":
-                selectionSort([...playfield.playfieldContainer.children]);
+                selectionSort(myArray);
                 break;
     
             case "Quick Sort":
-                quickSort([...playfield.playfieldContainer.children]);
+                quickSort(myArray, 0, myArray.length - 1);
                 break;
         }
 
