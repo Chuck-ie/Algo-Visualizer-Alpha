@@ -11,7 +11,7 @@
         <title>Visualizer</title>
         <!-- <link rel="stylesheet" type="text/css" href="/css/style.css"> -->
         <!-- <link rel="stylesheet" type="text/css" href="/css/my_style.css"> -->
-        <link rel="stylesheet" type="text/css" href="../css/my_style.css">
+        <link rel="stylesheet" type="text/css" href="/public/css/my_style.css">
 
     </head>
     <body>
@@ -80,15 +80,15 @@
         </div>
 
         <!-- all scripts -->
-        <script src="../js_files/playfieldMenu.js"></script>
-        <script src="../js_files/playfieldMain.js"></script>
+        <script src="/public/js_files/playfieldMenu.js"></script>
+        <script src="/public/js_files/playfieldMain.js"></script>
 
-        <script src="../js_files/AlgosPathing.js"></script>
-        <script src="../js_files/AlgosSorting.js"></script>
+        <script src="/public/js_files/AlgosPathing.js"></script>
+        <script src="/public/js_files/AlgosSorting.js"></script>
 
-        <script src="../js_files/HelpFunctions.js"></script>
-        <script src="../js_files/HelpFunctionsPath.js"></script>
-        <script src="../js_files/HelpFunctionsSort.js"></script>
+        <script src="/public/js_files/HelpFunctions.js"></script>
+        <script src="/public/js_files/HelpFunctionsPath.js"></script>
+        <script src="/public/js_files/HelpFunctionsSort.js"></script>
 
         <script src="https://kit.fontawesome.com/01a92479e6.js" crossorigin="anonymous"></script>
 
