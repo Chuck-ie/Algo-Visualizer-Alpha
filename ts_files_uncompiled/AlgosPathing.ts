@@ -22,7 +22,6 @@ var pathing:any = {
 function dijkstra(startCell:HTMLElement, targetCell:any, rowLength:number) {
 
     playfield.algoInProgress = true;
-    playfield.needsReset;
     // setting missing values for start-/targetNode
     pathing.startNode.actualCell = startCell;
     pathing.targetNode.actualCell = targetCell;

@@ -23,7 +23,7 @@ async function confirmOrder(playfieldDivs:HTMLElement[]) {
 
     for (let i = 0; i < playfieldDivs.length; i++) {
         playfieldDivs[i].style.backgroundColor = colors.green;
-        await sleep(25 / playfieldMenu.speedMultiplier);
+        await sleep(10 / playfieldMenu.speedMultiplier);
     }
 }
 

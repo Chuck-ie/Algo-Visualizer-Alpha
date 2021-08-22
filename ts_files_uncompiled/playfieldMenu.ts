@@ -7,50 +7,55 @@ var playfieldMenu:any = {
     speedMultiplier: 0,
     activeAlgoName: "",
     colorizeDelay: 100,
+    fasAngleLeft: "<i class='fas fa-angle-left'></i>",
+    leftClassName: "fas fa-angle-left",
+    fasAngleDown: "<i class='fas fa-angle-down'></i>",
+    downClassName: "fas fa-angle-down"
 }
 
-function chooseAlgoType(myMenuHeaderX:HTMLElement, myObject:HTMLElement, standardElement:HTMLElement, pathingElement:HTMLElement, sortingElement:HTMLElement) {
+function selectAlgoType(myObject:HTMLElement, algoTypeHeader:HTMLElement) {
 
-    setHeaderName(myMenuHeaderX, myObject);
     let windowSize:number[] = getWindowSize();
-    let myElements:HTMLElement[] = [standardElement, pathingElement, sortingElement];
-    playfieldMenu.activeAlgoName = myObject.innerHTML;
     playfieldMenu.typeSelected = true;
     playfieldMenu.algoSelected = false;
+    algoTypeHeader.innerHTML = myObject.innerHTML + playfieldMenu.fasAngleLeft;
+    
+    let selectAlgoMenu:HTMLElement = document.getElementById("select_algo_menu")!;
+    let selectHeader:HTMLElement = selectAlgoMenu.querySelector("#select_algo_header")!;
+    let selectOptions:HTMLElement = selectAlgoMenu.querySelector(".my_dropdown_options")!;
+
+    selectHeader.innerHTML = "Choose Algorithm" + playfieldMenu.fasAngleLeft;
+    selectOptions.innerHTML = "";
     clearPlayfield();
 
-    switch(playfieldMenu.activeAlgoName) {
+    switch(myObject.innerHTML) {
+
+        case "Pathfinding":
+            createPathingPlayfield(windowSize[0] * 0.6, windowSize[1] * 0.5)
+            selectOptions.insertAdjacentHTML("afterbegin", '<p onclick="selectAlgo(this, select_algo_header)">Dijkstra</p>');
+            break;
 
         case "Sorting":
             createSortingPlayfield((windowSize[1] * 0.5) / 16);
-
-            standardElement.style.display = "none";
-            pathingElement.style.display = "none";
-            sortingElement.style.display = "block";
-
-            break;
-
-        case "Pathfinding":
-            createPathingPlayfield(windowSize[0] * 0.6, windowSize[1] * 0.5);
-            standardElement.style.display = "none";
-            pathingElement.style.display = "block";
-            sortingElement.style.display = "none";
+            selectOptions.insertAdjacentHTML("afterbegin", '<p onclick="selectAlgo(this, select_algo_header)">Selection Sort</p>');
+            selectOptions.insertAdjacentHTML("afterbegin", '<p onclick="selectAlgo(this, select_algo_header)">Quick Sort</p>');
             break;
     }
 }
 
-function selectAlgoSpeed(myMenuHeaderX:HTMLElement, myMenuX:HTMLElement, myObject:HTMLElement) {
+function selectAlgo(myObject:HTMLElement, selectAlgoHeader:HTMLElement) {
 
-    playfieldMenu.speedMultiplier = Number(myObject.id);
-    playfieldMenu.speedSelected = true;    
-    setHeaderName(myMenuHeaderX, myObject);
+    let algorithmName:string = myObject.innerHTML;
+    playfieldMenu.activeAlgoName = algorithmName;
+    playfieldMenu.algoSelected = true;
+    setHeaderName(selectAlgoHeader, algorithmName);
 }
 
-function selectAlgo(myMenuHeaderX:HTMLElement, myObject:HTMLElement) {
+function selectAlgoSpeed(speedOption:HTMLElement, speedHeader:HTMLElement) {
 
-    playfieldMenu.activeAlgoName = myObject.innerHTML;
-    playfieldMenu.algoSelected = true;
-    setHeaderName(myMenuHeaderX, myObject);
+    playfieldMenu.speedMultiplier = Number(speedOption.id);
+    playfieldMenu.speedSelected = true;
+    setHeaderName(speedHeader, speedOption.innerHTML);
 }
 
 function resetPlayfield(myObject:HTMLElement | undefined = undefined) {
@@ -63,6 +68,7 @@ function resetPlayfield(myObject:HTMLElement | undefined = undefined) {
 
     let windowSize:number[] = getWindowSize();
     playfield.algoInProgress = false;
+    playfield.needsReset = false;
 
     if (playfield.sortingActive === true) {
         createSortingPlayfield((windowSize[1] * 0.5) / 16);
@@ -89,9 +95,15 @@ function testStart(myObject:HTMLElement) {
     if (playfieldMenu.algoSelected === true && playfieldMenu.speedSelected === true && playfieldMenu.typeSelected === true) {
 
         if (playfield.needsReset === true) {
-            let oldTarget:HTMLElement = pathing.targetCell;
-            resetPlayfield();
-            setTargetCell(oldTarget.id);
+            
+            if (pathing.targetCell !== undefined) {
+                let oldTarget:HTMLElement = pathing.targetCell;
+                resetPlayfield();
+                setTargetCell(oldTarget.id);
+                
+            } else {
+                resetPlayfield();
+            }
         }
 
         startAlgo();
@@ -104,6 +116,8 @@ function testStart(myObject:HTMLElement) {
 function startAlgo() {
 
     playfield.algoInProgress = true;
+    playfield.needsReset = true;
+
     // case sorting algo selected
     if (playfieldMenu.activeAlgoName.slice(-4) === "Sort") {
         let myArray:HTMLElement[] = [...playfield.playfieldContainer.children];
@@ -136,4 +150,3 @@ function startAlgo() {
         }
     }
 }
-

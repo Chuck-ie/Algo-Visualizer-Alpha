@@ -11,7 +11,9 @@
         <title>Visualizer</title>
         <!-- <link rel="stylesheet" type="text/css" href="/css/style.css"> -->
         <!-- <link rel="stylesheet" type="text/css" href="/css/my_style.css"> -->
-        <link rel="stylesheet" type="text/css" href="../css/my_style.css">
+        <!-- <link rel="stylesheet" type="text/css" href="../css/my_style.css"> -->
+        <link rel="stylesheet" type="text/css" href="/public/css/my_style.css">
+
 
     </head>
     <body>
@@ -39,8 +41,8 @@
                         <i class="fas fa-angle-left"></i>
                     </p>
                     <div class="my_dropdown_options" id="my_menu1" contenteditable="false">
-                        <p onclick="chooseAlgoType(my_menu1_header, this, my_standard, my_pathing, my_sorting)">Pathfinding</p>
-                        <p onclick="chooseAlgoType(my_menu1_header, this, my_standard, my_pathing, my_sorting)">Sorting</p>
+                        <p onclick="selectAlgoType(my_menu1_header, this, my_standard, my_pathing, my_sorting)">Pathfinding</p>
+                        <p onclick="selectAlgoType(my_menu1_header, this, my_standard, my_pathing, my_sorting)">Sorting</p>
                     </div>
                 </div>
                 <!-- ############################################################################ -->
@@ -106,7 +108,7 @@
         </div>
 
         <!-- all scripts -->
-        <script src="../js_files/playfieldMenu.js"></script>
+        <!-- <script src="../js_files/playfieldMenu.js"></script>
         <script src="../js_files/playfieldMain.js"></script>
 
         <script src="../js_files/AlgosPathing.js"></script>
@@ -114,7 +116,17 @@
 
         <script src="../js_files/HelpFunctions.js"></script>
         <script src="../js_files/HelpFunctionsPath.js"></script>
-        <script src="../js_files/HelpFunctionsSort.js"></script>
+        <script src="../js_files/HelpFunctionsSort.js"></script> -->
+
+        <script src="/public/js_files/playfieldMenu.js"></script>
+        <script src="/public/js_files/playfieldMain.js"></script>
+
+        <script src="/public/js_files/AlgosPathing.js"></script>
+        <script src="/public/js_files/AlgosSorting.js"></script>
+
+        <script src="/public/js_files/HelpFunctions.js"></script>
+        <script src="/public/js_files/HelpFunctionsPath.js"></script>
+        <script src="/public/js_files/HelpFunctionsSort.js"></script>
 
         <script src="https://kit.fontawesome.com/01a92479e6.js" crossorigin="anonymous"></script>
 

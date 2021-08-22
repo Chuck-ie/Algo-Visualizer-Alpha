@@ -27,27 +27,23 @@ function doOnResize() {
         }, 50);
     }
 }
-// changes appearance of dropdown menu points
-function showDropdown(myMenuHeaderX, myMenuX) {
-    if (myMenuX.contentEditable === "true") {
-        myMenuX.contentEditable = "false";
-        myMenuX.style.display = "none";
-        myMenuX.style.filter = "brightness(1.0)";
-        myMenuHeaderX.children[0].className = "fas fa-angle-left";
-        myMenuHeaderX.style.backgroundColor = "#4056A1";
-        myMenuHeaderX.style.filter = "brightness(1.0)";
+function showDropdown(optionsMenuID, dropdownHeader) {
+    let displayType = window.getComputedStyle(optionsMenuID).display;
+    if (displayType === "block") {
+        // make dropdown menu disappear while changing header color/fas symbol
+        optionsMenuID.style.display = "none";
+        dropdownHeader.style.backgroundColor = "#4056A1";
+        dropdownHeader.children[0].className = playfieldMenu.leftClassName;
     }
     else {
-        myMenuX.contentEditable = "true";
-        myMenuX.style.display = "block";
-        myMenuX.style.filter = "brightness(1.2)";
-        myMenuHeaderX.children[0].className = "fas fa-angle-down";
-        myMenuHeaderX.style.backgroundColor = "#14A76C";
-        myMenuHeaderX.style.filter = "brightness(1.2)";
+        // make dropdown menu reappear while changing header color/fas symbol back
+        optionsMenuID.style.display = "block";
+        dropdownHeader.style.backgroundColor = "#14A76C";
+        dropdownHeader.children[0].className = playfieldMenu.downClassName;
     }
 }
-function setHeaderName(myMenuHeaderX, myObject) {
-    myMenuHeaderX.innerHTML = myObject.innerHTML + "<i class='fas fa-angle-left'></i>";
+function setHeaderName(elementHeader, newHeader) {
+    elementHeader.innerHTML = newHeader + playfieldMenu.fasAngleLeft;
 }
 function setMenuHeight(rows = 0) {
     let newHeight;

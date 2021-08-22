@@ -26,7 +26,7 @@ function confirmOrder(playfieldDivs) {
     return __awaiter(this, void 0, void 0, function* () {
         for (let i = 0; i < playfieldDivs.length; i++) {
             playfieldDivs[i].style.backgroundColor = colors.green;
-            yield sleep(25 / playfieldMenu.speedMultiplier);
+            yield sleep(10 / playfieldMenu.speedMultiplier);
         }
     });
 }

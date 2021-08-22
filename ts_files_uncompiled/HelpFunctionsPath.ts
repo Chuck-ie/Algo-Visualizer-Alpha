@@ -54,6 +54,5 @@ function markShortestPath(currentNode:myNode) {
         }, 100)
     } else {
         playfield.algoInProgress = false;
-        playfield.needsReset = true;
     }
 }

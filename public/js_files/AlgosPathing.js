@@ -13,7 +13,6 @@ var pathing = {
 };
 function dijkstra(startCell, targetCell, rowLength) {
     playfield.algoInProgress = true;
-    playfield.needsReset;
     // setting missing values for start-/targetNode
     pathing.startNode.actualCell = startCell;
     pathing.targetNode.actualCell = targetCell;

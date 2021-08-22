@@ -18,7 +18,7 @@ async function selectionSort(playfieldDivs:HTMLElement[]) {
             // set comparisonElement yellow
             playfieldDivs[j].style.backgroundColor = colors.yellow;
             let comparisonHeight:number = playfieldDivs[j].clientHeight;
-            await sleep(10 / playfieldMenu.speedMultiplier);
+            await sleep(10 / (playfieldMenu.speedMultiplier));
 
             if (comparisonHeight < bestHeight) {
                 // set comparisonElement green
@@ -52,6 +52,8 @@ async function selectionSort(playfieldDivs:HTMLElement[]) {
 
 async function quickSort(playfieldDivs:HTMLElement[], lowest:number, highest:number) {
 
+    playfield.algoInProgress = true;
+
     if (lowest < highest) {
         let index:number = await getIndex(playfieldDivs, lowest, highest);
 
@@ -60,6 +62,8 @@ async function quickSort(playfieldDivs:HTMLElement[], lowest:number, highest:num
     } else if (lowest === highest) [
         confirmOrder(playfieldDivs.slice(lowest, lowest+1))
     ]
+
+    playfield.algoInProgress = false;
 }
 
 async function getIndex(playfieldDivs:HTMLElement[], lowest:number, highest:number) {
@@ -67,26 +71,24 @@ async function getIndex(playfieldDivs:HTMLElement[], lowest:number, highest:numb
     let pivot:number = highest;
     let i:number = lowest;
     let j:number = highest-1
-    let delay:number = 50;
 
     playfieldDivs[pivot].style.backgroundColor = colors.blue;
     playfieldDivs[i].style.backgroundColor = colors.yellow;
     playfieldDivs[j].style.backgroundColor = colors.red;
-    await sleep(delay);
+    await sleep(10 / playfieldMenu.speedMultiplier);
 
     while (i < j) {
-
 
         while (i < highest && playfieldDivs[i].clientHeight < playfieldDivs[pivot].clientHeight) {
             i++;
             // colorize current element yellow
-            await colorizeElement(playfieldDivs, i, colors.yellow, "i", delay);
+            await colorizeElement(playfieldDivs, i, colors.yellow, "i", 10 / playfieldMenu.speedMultiplier);
         }
 
         while (j > lowest && playfieldDivs[j].clientHeight >= playfieldDivs[pivot].clientHeight) {
             j--;
             // colorize current element red
-            await colorizeElement(playfieldDivs, j, colors.red, "j", delay);
+            await colorizeElement(playfieldDivs, j, colors.red, "j", 10 / playfieldMenu.speedMultiplier);
         }
 
         if (i < j) {

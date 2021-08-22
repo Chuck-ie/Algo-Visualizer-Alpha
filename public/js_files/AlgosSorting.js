@@ -24,7 +24,7 @@ function selectionSort(playfieldDivs) {
                 // set comparisonElement yellow
                 playfieldDivs[j].style.backgroundColor = colors.yellow;
                 let comparisonHeight = playfieldDivs[j].clientHeight;
-                yield sleep(10 / playfieldMenu.speedMultiplier);
+                yield sleep(10 / (playfieldMenu.speedMultiplier));
                 if (comparisonHeight < bestHeight) {
                     // set comparisonElement green
                     if (bestHeight === startHeight) {
@@ -54,6 +54,7 @@ function selectionSort(playfieldDivs) {
 }
 function quickSort(playfieldDivs, lowest, highest) {
     return __awaiter(this, void 0, void 0, function* () {
+        playfield.algoInProgress = true;
         if (lowest < highest) {
             let index = yield getIndex(playfieldDivs, lowest, highest);
             yield quickSort(playfieldDivs, lowest, index - 1);
@@ -63,6 +64,7 @@ function quickSort(playfieldDivs, lowest, highest) {
             [
                 confirmOrder(playfieldDivs.slice(lowest, lowest + 1))
             ];
+        playfield.algoInProgress = false;
     });
 }
 function getIndex(playfieldDivs, lowest, highest) {
@@ -70,21 +72,20 @@ function getIndex(playfieldDivs, lowest, highest) {
         let pivot = highest;
         let i = lowest;
         let j = highest - 1;
-        let delay = 50;
         playfieldDivs[pivot].style.backgroundColor = colors.blue;
         playfieldDivs[i].style.backgroundColor = colors.yellow;
         playfieldDivs[j].style.backgroundColor = colors.red;
-        yield sleep(delay);
+        yield sleep(10 / playfieldMenu.speedMultiplier);
         while (i < j) {
             while (i < highest && playfieldDivs[i].clientHeight < playfieldDivs[pivot].clientHeight) {
                 i++;
                 // colorize current element yellow
-                yield colorizeElement(playfieldDivs, i, colors.yellow, "i", delay);
+                yield colorizeElement(playfieldDivs, i, colors.yellow, "i", 10 / playfieldMenu.speedMultiplier);
             }
             while (j > lowest && playfieldDivs[j].clientHeight >= playfieldDivs[pivot].clientHeight) {
                 j--;
                 // colorize current element red
-                yield colorizeElement(playfieldDivs, j, colors.red, "j", delay);
+                yield colorizeElement(playfieldDivs, j, colors.red, "j", 10 / playfieldMenu.speedMultiplier);
             }
             if (i < j) {
                 swapHeights(playfieldDivs, i, j, "j");
