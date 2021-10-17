@@ -32,12 +32,14 @@ function showDropdown(optionsMenuID, dropdownHeader) {
     if (displayType === "block") {
         // make dropdown menu disappear while changing header color/fas symbol
         optionsMenuID.style.display = "none";
+        optionsMenuID.style.filter = "brightness(1.0)";
         dropdownHeader.style.backgroundColor = "#4056A1";
         dropdownHeader.children[0].className = playfieldMenu.leftClassName;
     }
     else {
         // make dropdown menu reappear while changing header color/fas symbol back
         optionsMenuID.style.display = "block";
+        optionsMenuID.style.filter = "brightness(0.9)";
         dropdownHeader.style.backgroundColor = "#14A76C";
         dropdownHeader.children[0].className = playfieldMenu.downClassName;
     }
